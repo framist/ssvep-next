@@ -1,0 +1,186 @@
+import { useEffect, useState } from 'react';
+import { Box, Button, Typography, IconButton } from '@mui/material';
+import { Close as CloseIcon } from '@mui/icons-material';
+import { useStore } from '../stores/canvasStore';
+import { StimulusBox } from './StimulusBox';
+import { useStimulation } from '../hooks/useStimulation';
+
+interface FullscreenModeProps {
+  onExit: () => void;
+}
+
+export function FullscreenMode({ onExit }: FullscreenModeProps) {
+  const { items, globalConfig, stopStimulation } = useStore();
+  const { stats } = useStimulation();
+  const [elapsedTime, setElapsedTime] = useState(0); // 改为正计时
+  const [showDebugInfo, setShowDebugInfo] = useState(false);
+
+  useEffect(() => {
+    if (!globalConfig.isRunning) return;
+
+    const interval = setInterval(() => {
+      setElapsedTime((prev) => prev + 1);
+    }, 1000);
+
+    // 只有在设置了有限时长时才设置自动停止
+    let timeout: number | undefined;
+    if (globalConfig.duration > 0) {
+      timeout = window.setTimeout(() => {
+        stopStimulation();
+        onExit();
+      }, globalConfig.duration * 1000);
+    }
+
+    return () => {
+      clearInterval(interval);
+      if (timeout) window.clearTimeout(timeout);
+    };
+  }, [globalConfig.isRunning, globalConfig.duration, stopStimulation, onExit]);
+
+  const handleExit = () => {
+    stopStimulation();
+    onExit();
+    // 退出全屏
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  };
+
+  const toggleDebugInfo = () => {
+    setShowDebugInfo(!showDebugInfo);
+  };
+
+  // 进入全屏
+  useEffect(() => {
+    const enterFullscreen = async () => {
+      try {
+        await document.documentElement.requestFullscreen();
+      } catch (error) {
+        console.log('Fullscreen not available:', error);
+      }
+    };
+    enterFullscreen();
+  }, []);
+
+  return (
+    <Box
+      sx={{
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: globalConfig.backgroundColor,
+        zIndex: 9999,
+        overflow: 'hidden',
+      }}
+    >
+      {/* 控制面板 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 20,
+          right: 20,
+          display: 'flex',
+          gap: 1,
+          zIndex: 10000,
+        }}
+      >
+        <Button
+          variant="contained"
+          size="small"
+          onClick={toggleDebugInfo}
+          sx={{ opacity: 0.8 }}
+        >
+          调试信息
+        </Button>
+        <IconButton
+          onClick={handleExit}
+          sx={{
+            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            '&:hover': {
+              backgroundColor: 'rgba(255, 255, 255, 0.9)',
+            },
+          }}
+        >
+          <CloseIcon />
+        </IconButton>
+      </Box>
+
+      {/* 调试信息面板 */}
+      {showDebugInfo && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 20,
+            left: 20,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            p: 2,
+            borderRadius: 1,
+            minWidth: 200,
+            zIndex: 10000,
+          }}
+        >
+          <Typography variant="h6" gutterBottom>
+            调试信息
+          </Typography>
+          <Typography variant="body2">
+            已运行时间：{elapsedTime}s
+          </Typography>
+          {globalConfig.duration > 0 && (
+            <Typography variant="body2">
+              剩余时间：{Math.max(0, globalConfig.duration - elapsedTime)}s
+            </Typography>
+          )}
+          <Typography variant="body2">
+            帧率：{stats.frameRate.toFixed(1)} FPS
+          </Typography>
+          <Typography variant="body2">
+            刺激方块数量：{Object.keys(items).length}
+          </Typography>
+          {Object.entries(stats.actualFrequencies).map(([id, freq]) => (
+            <Typography key={id} variant="body2">
+              {items[id]?.text || id}：{freq} Hz
+            </Typography>
+          ))}
+        </Box>
+      )}
+
+      {/* 时间显示 */}
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 20,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          color: 'white',
+          zIndex: 10000,
+        }}
+      >
+        <Typography variant="h4">
+          {globalConfig.duration === -1 
+            ? `${Math.floor(elapsedTime / 60)}:${(elapsedTime % 60).toString().padStart(2, '0')}`
+            : `${Math.max(0, globalConfig.duration - elapsedTime)}s`
+          }
+        </Typography>
+      </Box>
+
+      {/* 刺激方块 */}
+      {Object.values(items).map((item) => (
+        <StimulusBox
+          key={item.id}
+          item={item}
+          style={{
+            position: 'absolute',
+            left: item.position.x,
+            top: item.position.y,
+            width: item.size.width,
+            height: item.size.height,
+            pointerEvents: 'none',
+          }}
+        />
+      ))}
+    </Box>
+  );
+}

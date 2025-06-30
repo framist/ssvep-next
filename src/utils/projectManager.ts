@@ -1,0 +1,114 @@
+import type { StimulusItem, GlobalConfig } from '../stores/canvasStore';
+
+export interface ProjectData {
+  items: Record<string, StimulusItem>;
+  globalConfig: GlobalConfig;
+  version: string;
+  timestamp: number;
+}
+
+export class ProjectManager {
+  private static readonly STORAGE_KEY = 'ssvep-project';
+  private static readonly VERSION = '1.0.0';
+
+  static saveProject(items: Record<string, StimulusItem>, globalConfig: GlobalConfig): void {
+    const projectData: ProjectData = {
+      items,
+      globalConfig,
+      version: this.VERSION,
+      timestamp: Date.now(),
+    };
+
+    try {
+      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(projectData));
+    } catch (error) {
+      console.error('Failed to save project:', error);
+      throw new Error('保存项目失败');
+    }
+  }
+
+  static loadProject(): ProjectData | null {
+    try {
+      const data = localStorage.getItem(this.STORAGE_KEY);
+      if (!data) return null;
+
+      const projectData: ProjectData = JSON.parse(data);
+      return projectData;
+    } catch (error) {
+      console.error('Failed to load project:', error);
+      return null;
+    }
+  }
+
+  static exportProject(items: Record<string, StimulusItem>, globalConfig: GlobalConfig): void {
+    const projectData: ProjectData = {
+      items,
+      globalConfig,
+      version: this.VERSION,
+      timestamp: Date.now(),
+    };
+
+    const dataStr = JSON.stringify(projectData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `ssvep-project-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  }
+
+  static importProject(file: File): Promise<ProjectData> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        try {
+          const result = e.target?.result as string;
+          const projectData: ProjectData = JSON.parse(result);
+          resolve(projectData);
+        } catch {
+          reject(new Error('无效的项目文件格式'));
+        }
+      };
+      reader.onerror = () => reject(new Error('读取文件失败'));
+      reader.readAsText(file);
+    });
+  }
+
+  static generateShareableLink(items: Record<string, StimulusItem>, globalConfig: GlobalConfig): string {
+    const projectData: ProjectData = {
+      items,
+      globalConfig,
+      version: this.VERSION,
+      timestamp: Date.now(),
+    };
+
+    try {
+      const encoded = btoa(JSON.stringify(projectData));
+      const url = new URL(window.location.href);
+      url.searchParams.set('data', encoded);
+      return url.toString();
+    } catch (error) {
+      console.error('Failed to generate shareable link:', error);
+      throw new Error('生成分享链接失败');
+    }
+  }
+
+  static loadFromShareableLink(): ProjectData | null {
+    try {
+      const url = new URL(window.location.href);
+      const encoded = url.searchParams.get('data');
+      if (!encoded) return null;
+
+      const decoded = atob(encoded);
+      const projectData: ProjectData = JSON.parse(decoded);
+      return projectData;
+    } catch (error) {
+      console.error('Failed to load from shareable link:', error);
+      return null;
+    }
+  }
+}
