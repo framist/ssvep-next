@@ -31,10 +31,13 @@ export function useStimulation() {
     const startTime = Date.now();
     startTimeRef.current = startTime;
     
-    // 自动停止计时器
-    const stopTimer = setTimeout(() => {
-      stopStimulation();
-    }, globalConfig.duration * 1000);
+    // 自动停止计时器（只有在设置了有限时长时才启用）
+    let stopTimer: number | undefined;
+    if (globalConfig.duration > 0) {
+      stopTimer = window.setTimeout(() => {
+        stopStimulation();
+      }, globalConfig.duration * 1000);
+    }
 
     // 性能监控
     const monitorPerformance = () => {
@@ -54,7 +57,9 @@ export function useStimulation() {
     requestAnimationFrame(monitorPerformance);
 
     return () => {
-      clearTimeout(stopTimer);
+      if (stopTimer) {
+        clearTimeout(stopTimer);
+      }
     };
   }, [globalConfig.isRunning, globalConfig.duration, stopStimulation]);
 

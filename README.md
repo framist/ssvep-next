@@ -1,6 +1,6 @@
-# SSVEP-Next: 现代 SSVEP 刺激界面构建工具
+# SSVEP-Next: 现代 SSVEP Web 快速构建工具
 
-**访问地址：** `https://framist.github.io/ssvep-next/`
+[在线演示](https://framist.github.io/ssvep-next/)
 
 SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 (SPA)，旨在提供一个直观、高效的图形化界面，用于设计和运行稳态视觉诱发电位 (SSVEP) 实验中的视觉刺激。用户可以通过拖拽、配置属性的方式，在画布上轻松创建和管理 SSVEP 刺激界面。
 

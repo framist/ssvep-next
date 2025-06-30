@@ -162,17 +162,21 @@ export function PropertiesPanel() {
           实验持续时间：{globalConfig.duration === -1 ? '无限' : `${globalConfig.duration} 秒`}
         </Typography>
         <Slider
-          value={globalConfig.duration === -1 ? 300 : globalConfig.duration}
-          onChange={(_, value) => updateGlobalConfig({ duration: value as number })}
+          value={globalConfig.duration === -1 ? 360 : globalConfig.duration}
+          onChange={(_, value) => {
+            // 当滑块拖到最大值时，设置为无限时长
+            updateGlobalConfig({ duration: value === 360 ? -1 : value as number });
+          }}
           min={5}
-          max={300}
+          max={360}
           step={5}
           valueLabelDisplay="auto"
           marks={[
             { value: 5, label: '5s' },
-            { value: 30, label: '30s' },
             { value: 60, label: '1m' },
-            { value: 300, label: '无限' }
+            { value: 120, label: '2m' },
+            { value: 300, label: '5m' },
+            { value: 360, label: '无限' }
           ]}
         />
         <Button
