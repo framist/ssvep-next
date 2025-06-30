@@ -56,6 +56,57 @@ src/
     ```
     构建产物将生成在 `dist/` 目录下。
 
+## 部署
+
+### 自动部署到 GitHub Pages
+
+本项目已配置 GitHub Actions 自动部署。当代码推送到 `main` 分支时，将自动构建并部署到 GitHub Pages。
+
+**首次设置 GitHub Pages：**
+
+1. 在 GitHub 仓库中，进入 Settings > Pages
+2. 在 "Source" 部分选择 "GitHub Actions"
+3. 推送代码到 `main` 分支即可触发自动部署
+
+**访问地址：** `https://framist.github.io/ssvep-next/`
+
+### 手动部署
+
+如果需要手动部署，可以使用以下命令：
+
+```bash
+npm run deploy
+```
+
+这将构建项目并将构建产物推送到 `gh-pages` 分支。
+
+### 本地预览
+
+要预览生产构建版本：
+
+```bash
+npm run preview
+```
+
+## 开发指南
+
+### 添加新组件
+
+1. 在 `src/components/` 中创建新组件
+2. 在相应的 store 中添加状态管理逻辑
+3. 更新类型定义
+4. 添加必要的测试
+
+### 自定义配置
+
+- 修改 `vite.config.ts` 调整构建配置
+- 编辑 `tsconfig.json` 调整 TypeScript 配置
+- 在 `eslint.config.js` 中配置代码规范
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
 ## 许可证
 
 本项目采用 MIT 许可证。
