@@ -1,69 +1,61 @@
-# React + TypeScript + Vite
+# SSVEP-Next: 现代 SSVEP 刺激界面构建工具
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 (SPA)，旨在提供一个直观、高效的图形化界面，用于设计和运行稳态视觉诱发电位 (SSVEP) 实验中的视觉刺激。用户可以通过拖拽、配置属性的方式，在画布上轻松创建和管理 SSVEP 刺激界面。
 
-Currently, two official plugins are available:
+## 核心功能
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   **可视化设计器：** 通过拖拽方式在画布上布局刺激方块。
+-   **属性配置：** 实时调整刺激方块的频率、文本、颜色、位置和大小等属性。
+-   **刺激渲染：** 精确渲染配置好的 SSVEP 刺激，支持全屏运行模式。
+-   **模块化组件：** 清晰的项目结构，便于功能扩展和维护。
 
-## Expanding the ESLint configuration
+## 技术栈
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+-   **前端框架：** React 18
+-   **开发工具：** Vite
+-   **语言：** TypeScript
+-   **拖拽库：** dnd-kit
+-   **状态管理：** Zustand
+-   **UI 组件：** (待定，可根据项目需求引入如 MUI 或 Ant Design)
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 项目结构
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── assets/             # 静态资源
+├── components/         # React 组件 (Canvas, Toolbox, PropertiesPanel, StimulusBox 等)
+├── hooks/              # 自定义 React Hooks (useStimulation, useDemoSetup 等)
+├── stores/             # Zustand 状态管理 Store (canvasStore 等)
+├── utils/              # 工具函数
+├── App.tsx             # 主应用组件
+└── main.tsx            # 应用入口
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 快速开始
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1.  **克隆仓库：**
+    ```bash
+    git clone https://github.com/your-username/ssvep-next.git
+    cd ssvep-next
+    ```
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+2.  **安装依赖：**
+    ```bash
+    npm install
+    ```
+
+3.  **运行开发服务器：**
+    ```bash
+    npm run dev
+    ```
+    应用将在 `http://localhost:5173` (或类似地址) 启动。
+
+4.  **构建生产版本：**
+    ```bash
+    npm run build
+    ```
+    构建产物将生成在 `dist/` 目录下。
+
+## 许可证
+
+本项目采用 MIT 许可证。
