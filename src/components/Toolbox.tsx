@@ -243,7 +243,7 @@ export function Toolbox() {
           </Typography>
           <br />
           <Typography variant="caption">
-            by Framist
+            by Framist | <a href="https://github.com/framist/ssvep-next">Github</a>
           </Typography>
         </Box>
 
