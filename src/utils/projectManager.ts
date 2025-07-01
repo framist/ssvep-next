@@ -87,7 +87,8 @@ export class ProjectManager {
     };
 
     try {
-      const encoded = btoa(JSON.stringify(projectData));
+      // 使用 encodeURIComponent 替代 btoa，支持 Unicode 字符
+      const encoded = encodeURIComponent(JSON.stringify(projectData));
       const url = new URL(window.location.href);
       url.searchParams.set('data', encoded);
       return url.toString();
@@ -103,7 +104,8 @@ export class ProjectManager {
       const encoded = url.searchParams.get('data');
       if (!encoded) return null;
 
-      const decoded = atob(encoded);
+      // 使用 decodeURIComponent 替代 atob，与编码函数匹配
+      const decoded = decodeURIComponent(encoded);
       const projectData: ProjectData = JSON.parse(decoded);
       return projectData;
     } catch (error) {

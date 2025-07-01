@@ -12,9 +12,17 @@ interface FullscreenModeProps {
 export function FullscreenMode({ onExit }: FullscreenModeProps) {
   const { items, globalConfig, stopStimulation } = useStore();
   const { stats } = useStimulation();
-  const [elapsedTime, setElapsedTime] = useState(0); // 改为正计时
+  const [elapsedTime, setElapsedTime] = useState(0);
   const [showDebugInfo, setShowDebugInfo] = useState(false);
 
+  // 当刺激开始时重置计时器
+  useEffect(() => {
+    if (globalConfig.isRunning) {
+      setElapsedTime(0); // 重置计时器
+    }
+  }, [globalConfig.isRunning]);
+
+  // 处理计时逻辑
   useEffect(() => {
     if (!globalConfig.isRunning) return;
 
@@ -22,18 +30,22 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
       setElapsedTime((prev) => prev + 1);
     }, 1000);
 
-    // 只有在设置了有限时长时才设置自动停止
-    let timeout: number | undefined;
-    if (globalConfig.duration > 0) {
-      timeout = window.setTimeout(() => {
-        stopStimulation();
-        onExit();
-      }, globalConfig.duration * 1000);
-    }
-
     return () => {
       clearInterval(interval);
-      if (timeout) window.clearTimeout(timeout);
+    };
+  }, [globalConfig.isRunning]);
+
+  // 处理自动停止逻辑
+  useEffect(() => {
+    if (!globalConfig.isRunning || globalConfig.duration <= 0) return;
+
+    const timeout = window.setTimeout(() => {
+      stopStimulation();
+      onExit();
+    }, globalConfig.duration * 1000);
+
+    return () => {
+      window.clearTimeout(timeout);
     };
   }, [globalConfig.isRunning, globalConfig.duration, stopStimulation, onExit]);
 
@@ -134,14 +146,14 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
             </Typography>
           )}
           <Typography variant="body2">
-            帧率：{stats.frameRate.toFixed(1)} FPS
+            帧率：{stats.frameRate.toFixed(2)} FPS
           </Typography>
           <Typography variant="body2">
             刺激方块数量：{Object.keys(items).length}
           </Typography>
           {Object.entries(stats.actualFrequencies).map(([id, freq]) => (
             <Typography key={id} variant="body2">
-              {items[id]?.text || id}：{freq} Hz
+              {items[id]?.text || id}：{items[id]?.frequency} Hz ({freq.toFixed(2)} Hz)
             </Typography>
           ))}
         </Box>

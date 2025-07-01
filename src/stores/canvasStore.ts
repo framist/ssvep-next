@@ -18,16 +18,23 @@ export interface GlobalConfig {
   gridSize: number; // 网格大小
 }
 
+export interface StimulusState {
+  isVisible: boolean;
+  actualFrequency: number;
+}
+
 interface CanvasStore {
   items: Record<string, StimulusItem>;
   selectedItemId: string | null;
   globalConfig: GlobalConfig;
+  stimulationState: Record<string, StimulusState>; // 存储每个刺激方块的实时状态
   addItem: (item: Omit<StimulusItem, 'id'>, position: { x: number; y: number }) => void;
   updateItem: (id: string, updates: Partial<StimulusItem>) => void;
   moveItem: (id: string, position: { x: number; y: number }) => void;
   removeItem: (id: string) => void;
   selectItem: (id: string | null) => void;
   updateGlobalConfig: (config: Partial<GlobalConfig>) => void;
+  updateStimulationState: (states: Record<string, StimulusState>) => void; // 更新刺激状态
   loadProject: (items: Record<string, StimulusItem>, config: GlobalConfig) => void;
   clearAll: () => void;
   startStimulation: () => void;
@@ -37,6 +44,7 @@ interface CanvasStore {
 export const useStore = create<CanvasStore>((set) => ({
   items: {},
   selectedItemId: null,
+  stimulationState: {}, // 初始化刺激状态
   globalConfig: {
     duration: -1, // 默认无限时长
     backgroundColor: '#000000',
@@ -75,14 +83,20 @@ export const useStore = create<CanvasStore>((set) => ({
   removeItem: (id) => set((state) => {
     const newItems = { ...state.items };
     delete newItems[id];
+    const newStimulationState = { ...state.stimulationState };
+    delete newStimulationState[id];
     return {
       items: newItems,
+      stimulationState: newStimulationState,
       selectedItemId: state.selectedItemId === id ? null : state.selectedItemId,
     };
   }),
   selectItem: (id) => set({ selectedItemId: id }),
   updateGlobalConfig: (config) => set((state) => ({
     globalConfig: { ...state.globalConfig, ...config },
+  })),
+  updateStimulationState: (states) => set((state) => ({
+    stimulationState: { ...state.stimulationState, ...states },
   })),
   loadProject: (items, config) => set({
     items,
@@ -92,6 +106,7 @@ export const useStore = create<CanvasStore>((set) => ({
   clearAll: () => set({
     items: {},
     selectedItemId: null,
+    stimulationState: {},
     globalConfig: {
       duration: -1,
       backgroundColor: '#000000',
@@ -105,5 +120,6 @@ export const useStore = create<CanvasStore>((set) => ({
   })),
   stopStimulation: () => set((state) => ({
     globalConfig: { ...state.globalConfig, isRunning: false },
+    stimulationState: {}, // 停止时清空刺激状态
   })),
 }));

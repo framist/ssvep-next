@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { useDraggable } from '@dnd-kit/core';
 import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
@@ -15,53 +15,16 @@ export function StimulusBox({ item, onClick, style }: StimulusBoxProps) {
     id: item.id,
   });
   
-  const { selectedItemId, globalConfig } = useStore();
-  const [isVisible, setIsVisible] = useState(true);
-  const animationRef = useRef<number | null>(null);
-  const startTimeRef = useRef<number | null>(null);
+  const { selectedItemId, globalConfig, stimulationState } = useStore();
   
   const isSelected = selectedItemId === item.id;
-
-  // SSVEP 刺激渲染逻辑
-  useEffect(() => {
-    if (!globalConfig.isRunning) {
-      setIsVisible(true);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      return;
-    }
-
-    const frequency = item.frequency;
-    const period = 1000 / frequency; // 周期（毫秒）
-    
-    const animate = (currentTime: number) => {
-      if (!startTimeRef.current) {
-        startTimeRef.current = currentTime;
-      }
-      
-      const elapsed = currentTime - startTimeRef.current;
-      const phase = (elapsed % period) / period;
-      
-      // 使用方波刺激（50% 占空比）
-      setIsVisible(phase < 0.5);
-      
-      animationRef.current = requestAnimationFrame(animate);
-    };
-    
-    animationRef.current = requestAnimationFrame(animate);
-    
-    return () => {
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
-      startTimeRef.current = null;
-    };
-  }, [item.frequency, globalConfig.isRunning]);
+  
+  // 从 store 获取当前刺激状态，如果不存在则默认为可见
+  const currentStimulationState = stimulationState[item.id];
+  const isVisible = currentStimulationState?.isVisible ?? true;
 
   const combinedStyle: React.CSSProperties = {
     ...style,
-    // 不在这里设置 transform，统一在 sx 中处理
   };
 
   const handleClick = (e: React.MouseEvent) => {
