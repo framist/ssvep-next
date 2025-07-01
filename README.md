@@ -1,31 +1,16 @@
 # SSVEP-Next: 现代 SSVEP Web 快速构建工具
 
-[在线演示](https://framist.github.io/ssvep-next/)
+[Demo | 在线使用](https://framist.github.io/ssvep-next/ssvep-next/)
 
-SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 (SPA)，旨在提供一个直观、高效的图形化界面，用于设计和运行稳态视觉诱发电位 (SSVEP) 实验中的视觉刺激。用户可以通过拖拽、配置属性的方式，在画布上轻松创建和管理 SSVEP 刺激界面。
+SSVEP-Next is a single-page application (SPA) built using React, TypeScript, and Vite. It offers an intuitive and efficient graphical interface for designing and executing visual stimuli in steady-state visual evoked potential (SSVEP) experiments. Users can effortlessly create and manage SSVEP stimulation interfaces on the canvas through drag-and-drop operations and property configuration. This project draws inspiration from [quick-ssvep](https://github.com/OmidS/quickssvep) and aims to combine its core scientific capabilities with modern web development paradigms, delivering a more powerful and flexible experimental design tool.
 
-本项目深受 [quick-ssvep](https://github.com/OmidS/quickssvep) 的启发，并旨在将其核心科学功能与现代 Web 开发范式相结合，提供更强大、更灵活的实验设计工具。我们继承了其高精度的刺激渲染引擎，并在此基础上进行改进：
+SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 (SPA)，旨在提供一个直观、高效的图形化界面，用于设计和运行稳态视觉诱发电位 (SSVEP) 实验中的视觉刺激。用户可以通过拖拽、配置属性的方式，在画布上轻松创建和管理 SSVEP 刺激界面。本项目深受 [quick-ssvep](https://github.com/OmidS/quickssvep) 的启发，并旨在将其核心科学功能与现代 Web 开发范式相结合，提供更强大、更灵活的实验设计工具。
 
-| 特性 | quick-ssvep (原始) | SSVEP-Next (本项目) |
-| :--- | :--- | :--- |
-| **核心范式** | 参数化配置，代码驱动 | ✅ **可视化、拖拽式设计** |
-| **技术架构** | 原生 JavaScript, HTML, CSS | ✅ **React, TypeScript, Vite** (现代 Web 架构) |
-| **状态管理** | 全局变量，DOM 查询 | ✅ **Zustand** (集中式、可预测的状态管理) |
-| **频率测量** | 直接测量瞬时/平均频率 | ✅ **继承并优化**：实现相同的直接测量法，并增加滑动窗口平滑 |
-| **帧率监控** | 启动前预估 | ✅ **实时动态监控**，运行时反馈更准确 |
-| **项目管理** | 无 | ✅ **项目保存/加载** (本地存储/文件) |
-| **分享与协作**| 生成静态 URL | ✅ **继承并优化** 一键分享链接，轻松复现实验设计 |
-| **部署** | 手动上传文件 | ✅ **CI/CD 自动化部署** (GitHub Actions) |
 
-通过这些改进，SSVEP-Next 不仅保留了 quick-ssvep 在刺激渲染上的科学严谨性，还极大地提升了实验设计的效率、可维护性和可复现性。
-
-> [!Note]
+> [!Warning]
 > The performance of the stimulator (the exact frequency of stimulations) highly depends on the machine and the web browser running it. It is not intended for rigorous academic use, rather it is a fast solution to test simple SSVEP setups.
 >
 > 注意：刺激器的性能（刺激的确切频率）在很大程度上取决于机器和运行它的 Web 浏览器。它不是为严格的学术用途而设计的，而是测试简单 SSVEP 设置的快速解决方案。
-
-
-
 
 ## 核心功能
 

@@ -24,7 +24,6 @@ function DraggableStimulusBox() {
         width: 80,
         height: 80,
         border: '2px dashed #1976d2',
-        borderRadius: 1,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -235,6 +234,19 @@ export function Toolbox() {
           sx={{ display: 'none' }}
           aria-label="导入项目文件"
         />
+
+        <Divider sx={{ my: 2 }} />
+
+        <Box sx={{ textAlign: 'center', color: '#999' }}>
+          <Typography variant="caption">
+            版本：{import.meta.env.VITE_APP_VERSION}
+          </Typography>
+          <br />
+          <Typography variant="caption">
+            by Framist
+          </Typography>
+        </Box>
+
       </Box>
     </>
   );

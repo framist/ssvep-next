@@ -102,7 +102,6 @@ export function PropertiesPanel() {
                 value={selectedItem.size.width}
                 onChange={(e) => handleSizeUpdate('width', parseInt(e.target.value) || 100)}
                 size="small"
-                inputProps={{ min: 50, max: 500 }}
               />
               <TextField
                 label="高度"
@@ -110,7 +109,6 @@ export function PropertiesPanel() {
                 value={selectedItem.size.height}
                 onChange={(e) => handleSizeUpdate('height', parseInt(e.target.value) || 100)}
                 size="small"
-                inputProps={{ min: 50, max: 500 }}
               />
             </Box>
           </Box>

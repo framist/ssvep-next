@@ -29,7 +29,7 @@ export function StimulusBox({ item, onClick, style }: StimulusBoxProps) {
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
-    // Dragging is handled by the drag handle, so any click on the box itself is for selection.
+    // 拖动由拖动手柄处理，因此对框本身的任何单击都是用于选择的。
     if (onClick) {
       onClick();
     }
@@ -45,8 +45,9 @@ export function StimulusBox({ item, onClick, style }: StimulusBoxProps) {
         position: 'relative', // Needed to position the drag handle
         width: item.size.width,
         height: item.size.height,
-        border: isSelected ? '2px solid #1976d2' : '1px solid #ccc',
-        borderRadius: 1,
+        border: globalConfig.isRunning 
+          ? ('2px solid transparent')
+          : (isSelected ? '2px solid #1976d2' : '2px solid rgba(255, 255, 255, 0.5)'),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -62,12 +63,12 @@ export function StimulusBox({ item, onClick, style }: StimulusBoxProps) {
         opacity: isDragging ? 0.5 : 1,
         transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : 'none',
         '&:hover': {
-          borderColor: isSelected ? '#1976d2' : '#999',
-          boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+          border: isSelected ? '2px solid #1976d2' : '2px solid rgba(0, 0, 0, 0.5)',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
         },
       }}
-    >
-      {!globalConfig.isRunning && (
+    >      
+      {!globalConfig.isRunning && ( // 仅在非运行状态下显示拖动手柄
         <Box
           {...listeners}
           {...attributes}
