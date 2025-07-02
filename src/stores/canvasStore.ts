@@ -12,6 +12,12 @@ export interface StimulusItem {
 
 export type WaveformType = 'square' | 'sine';
 
+export interface ViewConfig {
+  scale: number; // 缩放比例
+  panX: number; // X 轴偏移
+  panY: number; // Y 轴偏移
+}
+
 export interface GlobalConfig {
   duration: number; // -1 表示无限时长
   backgroundColor: string;
@@ -31,6 +37,7 @@ interface CanvasStore {
   items: Record<string, StimulusItem>;
   selectedItemId: string | null;
   globalConfig: GlobalConfig;
+  viewConfig: ViewConfig; // 视图配置
   stimulationState: Record<string, StimulusState>; // 存储每个刺激方块的实时状态
   addItem: (item: Omit<StimulusItem, 'id'>, position: { x: number; y: number }) => void;
   updateItem: (id: string, updates: Partial<StimulusItem>) => void;
@@ -38,17 +45,24 @@ interface CanvasStore {
   removeItem: (id: string) => void;
   selectItem: (id: string | null) => void;
   updateGlobalConfig: (config: Partial<GlobalConfig>) => void;
+  updateViewConfig: (config: Partial<ViewConfig>) => void; // 更新视图配置
   updateStimulationState: (states: Record<string, StimulusState>) => void; // 更新刺激状态
   loadProject: (items: Record<string, StimulusItem>, config: GlobalConfig) => void;
   clearAll: () => void;
   startStimulation: () => void;
   stopStimulation: () => void;
+  resetView: () => void; // 重置视图
 }
 
 export const useStore = create<CanvasStore>((set) => ({
   items: {},
   selectedItemId: null,
   stimulationState: {}, // 初始化刺激状态
+  viewConfig: {
+    scale: 1,
+    panX: 0,
+    panY: 0,
+  },
   globalConfig: {
     duration: -1, // 默认无限时长
     backgroundColor: '#000000',
@@ -100,6 +114,9 @@ export const useStore = create<CanvasStore>((set) => ({
   updateGlobalConfig: (config) => set((state) => ({
     globalConfig: { ...state.globalConfig, ...config },
   })),
+  updateViewConfig: (config) => set((state) => ({
+    viewConfig: { ...state.viewConfig, ...config },
+  })),
   updateStimulationState: (states) => set((state) => ({
     stimulationState: { ...state.stimulationState, ...states },
   })),
@@ -112,6 +129,11 @@ export const useStore = create<CanvasStore>((set) => ({
     items: {},
     selectedItemId: null,
     stimulationState: {},
+    viewConfig: {
+      scale: 1,
+      panX: 0,
+      panY: 0,
+    },
     globalConfig: {
       duration: -1,
       backgroundColor: '#000000',
@@ -127,5 +149,12 @@ export const useStore = create<CanvasStore>((set) => ({
   stopStimulation: () => set((state) => ({
     globalConfig: { ...state.globalConfig, isRunning: false },
     stimulationState: {}, // 停止时清空刺激状态
+  })),
+  resetView: () => set(() => ({
+    viewConfig: {
+      scale: 1,
+      panX: 0,
+      panY: 0,
+    },
   })),
 }));

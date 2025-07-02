@@ -20,6 +20,7 @@ function DraggableStimulusBox() {
       style={style}
       {...listeners}
       {...attributes}
+      data-testid="toolbox-draggable"
       sx={{
         width: 80,
         height: 80,
@@ -127,7 +128,7 @@ export function Toolbox() {
 
   return (
     <>
-      <Box sx={{ width: '200px', borderRight: '1px solid #ccc', p: 2 }}>
+      <Box sx={{ width: '500px', borderRight: '1px solid #ccc', p: 2 }}>
         <Typography variant="h6" gutterBottom>
           工具箱
         </Typography>

@@ -9,7 +9,7 @@ import { useStore } from './stores/canvasStore';
 import { ProjectManager } from './utils/projectManager';
 
 function App() {
-  const { addItem, moveItem, globalConfig, loadProject } = useStore();
+  const { addItem, moveItem, globalConfig, viewConfig, loadProject } = useStore();
   const [showFullscreen, setShowFullscreen] = useState(false);
 
   // 网格吸附辅助函数
@@ -42,12 +42,25 @@ function App() {
     if (over && over.id === 'canvas') {
       // 从工具箱拖拽新项目到画布
       if (active.id === 'new-stimulus-box') {
-        const canvasRect = document.getElementById('canvas')?.getBoundingClientRect();
-        if (canvasRect && event.activatorEvent) {
-          // 获取鼠标位置相对于画布的坐标 TODO 仍不准确
-          let x = Math.max(0, event.delta.x - canvasRect.left);
-          let y = Math.max(0, event.delta.y - canvasRect.top);
+        const canvasElement = document.getElementById('canvas');
+        const canvasRect = canvasElement?.getBoundingClientRect();
+        const toolboxElement = document.querySelector('[data-testid="toolbox-draggable"]');
+        
+        if (canvasRect && toolboxElement && event.delta) {
+          // 获取工具箱元素的位置
+          const toolboxRect = toolboxElement.getBoundingClientRect();
           
+          const finalX = toolboxRect.left - canvasRect.left;
+          const finalY = toolboxRect.top - canvasRect.top;
+
+          // 考虑画布的缩放和平移，转换到画布坐标系
+          let x = (finalX - viewConfig.panX) / viewConfig.scale;
+          let y = (finalY - viewConfig.panY) / viewConfig.scale;
+
+          // 确保不超出画布边界
+          x = Math.max(0, x);
+          y = Math.max(0, y);
+
           // 应用网格吸附
           if (globalConfig.snapToGrid) {
             x = snapToGrid(x, globalConfig.gridSize);
@@ -68,16 +81,19 @@ function App() {
       }
     }
     
-    // 处理画布上现有项目的拖拽 - 修复位置计算
+    // 处理画布上现有项目的拖拽
     if (active.id !== 'new-stimulus-box' && event.delta && over?.id === 'canvas') {
       const activeId = active.id as string;
-      const canvasRect = document.getElementById('canvas')?.getBoundingClientRect();
       const currentItem = useStore.getState().items[activeId];
       
-      if (canvasRect && currentItem) {
+      if (currentItem) {
+        // 考虑缩放因子调整拖拽距离
+        const deltaX = event.delta.x / viewConfig.scale;
+        const deltaY = event.delta.y / viewConfig.scale;
+        
         // 基于当前位置和拖拽偏移量计算新位置
-        let newX = Math.max(0, currentItem.position.x + event.delta.x);
-        let newY = Math.max(0, currentItem.position.y + event.delta.y);
+        let newX = Math.max(0, currentItem.position.x + deltaX);
+        let newY = Math.max(0, currentItem.position.y + deltaY);
         
         // 应用网格吸附
         if (globalConfig.snapToGrid) {

@@ -53,7 +53,7 @@ export function PropertiesPanel() {
   };
 
   return (
-    <Box sx={{ width: '300px', borderLeft: '1px solid #ccc', p: 2, height: '100vh', overflow: 'auto' }}>
+    <Box sx={{ width: '600px', borderLeft: '1px solid #ccc', p: 2, height: '100vh', overflow: 'auto' }}>
       <Typography variant="h6" gutterBottom>
         属性面板
       </Typography>
