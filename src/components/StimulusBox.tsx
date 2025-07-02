@@ -21,7 +21,31 @@ export function StimulusBox({ item, onClick, style }: StimulusBoxProps) {
   
   // 从 store 获取当前刺激状态，如果不存在则默认为可见
   const currentStimulationState = stimulationState[item.id];
-  const isVisible = currentStimulationState?.isVisible ?? true;
+  const brightness = currentStimulationState?.brightness ?? 1;
+
+  const getOpacity = () => {
+    if (!globalConfig.isRunning) {
+      return 1; // 非运行状态下完全不透明
+    }
+    return brightness;
+  };
+
+  const getTextColor = () => {
+    // todo
+    if (!globalConfig.isRunning) {
+      return '#000000';
+    }
+    return '#00000088';
+
+    // if (globalConfig.waveformType === 'sine') {
+    //   // 正弦波模式：根据透明度和背景选择合适的文本颜色
+    //   // 当透明度较高时使用深色文本，透明度较低时使用浅色文本
+    //   return brightness > 0.5 ? '#000000' : '#ffffff';
+    // } else {
+    //   // 方波模式：使用原始逻辑
+    //   return isVisible ? '#000000' : '#ffffff';
+    // }
+  };
 
   const combinedStyle: React.CSSProperties = {
     ...style,
@@ -52,15 +76,13 @@ export function StimulusBox({ item, onClick, style }: StimulusBoxProps) {
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'pointer', // Changed from 'grab' to 'pointer'
-        backgroundColor: globalConfig.isRunning 
-          ? (isVisible ? item.color : '#000000')
-          : item.color,
-        color: globalConfig.isRunning 
-          ? (isVisible ? '#000000' : item.color)
-          : '#000000',
+        backgroundColor: item.color,
+        color: getTextColor(),
+        opacity: globalConfig.isRunning 
+          ? getOpacity()
+          : (isDragging ? 0.5 : 1),
         transition: globalConfig.isRunning ? 'none' : 'all 0.2s ease',
         userSelect: 'none',
-        opacity: isDragging ? 0.5 : 1,
         transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : 'none',
         '&:hover': {
           border: isSelected ? '2px solid #1976d2' : '2px solid rgba(0, 0, 0, 0.5)',

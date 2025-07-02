@@ -44,9 +44,9 @@ function App() {
       if (active.id === 'new-stimulus-box') {
         const canvasRect = document.getElementById('canvas')?.getBoundingClientRect();
         if (canvasRect && event.activatorEvent) {
-          const mouseEvent = event.activatorEvent as MouseEvent;
-          let x = Math.max(0, mouseEvent.clientX - canvasRect.left - 50);
-          let y = Math.max(0, mouseEvent.clientY - canvasRect.top - 50);
+          // 获取鼠标位置相对于画布的坐标 TODO 仍不准确
+          let x = Math.max(0, event.delta.x - canvasRect.left);
+          let y = Math.max(0, event.delta.y - canvasRect.top);
           
           // 应用网格吸附
           if (globalConfig.snapToGrid) {
@@ -58,7 +58,7 @@ function App() {
             { 
               text: 'Stimulus', 
               frequency: 10, 
-              size: { width: 100, height: 100 }, 
+              size: { width: 120, height: 120 }, 
               color: '#ffffff',
               position: { x: 0, y: 0 } // 临时位置，会被覆盖
             }, 

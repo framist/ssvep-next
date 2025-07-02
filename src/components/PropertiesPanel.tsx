@@ -7,6 +7,10 @@ import {
   Divider,
   FormControlLabel,
   Switch,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
 } from '@mui/material';
 import { useStore } from '../stores/canvasStore';
 
@@ -154,6 +158,18 @@ export function PropertiesPanel() {
       <Typography variant="subtitle1" gutterBottom>
         全局设置
       </Typography>
+
+      <FormControl fullWidth margin="normal" size="small">
+        <InputLabel>波形类型</InputLabel>
+        <Select
+          value={globalConfig.waveformType}
+          label="波形类型"
+          onChange={(e) => updateGlobalConfig({ waveformType: e.target.value as 'square' | 'sine' })}
+        >
+          <MenuItem value="square">方波</MenuItem>
+          <MenuItem value="sine">正弦波</MenuItem>
+        </Select>
+      </FormControl>
 
       <Box sx={{ mt: 2, mb: 2 }}>
         <Typography gutterBottom>

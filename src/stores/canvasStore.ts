@@ -10,17 +10,21 @@ export interface StimulusItem {
   isRunning?: boolean;
 }
 
+export type WaveformType = 'square' | 'sine';
+
 export interface GlobalConfig {
   duration: number; // -1 表示无限时长
   backgroundColor: string;
   isRunning: boolean;
   snapToGrid: boolean; // 是否启用网格吸附
   gridSize: number; // 网格大小
+  waveformType: WaveformType; // 波形类型
 }
 
 export interface StimulusState {
   isVisible: boolean;
   actualFrequency: number;
+  brightness: number; // 0-1 之间，用于正弦波的连续亮度控制
 }
 
 interface CanvasStore {
@@ -51,6 +55,7 @@ export const useStore = create<CanvasStore>((set) => ({
     isRunning: false,
     snapToGrid: true, // 默认启用网格吸附
     gridSize: 20, // 默认网格大小 20px
+    waveformType: 'square', // 默认方波
   },
   addItem: (item: Omit<StimulusItem, 'id'>, position: { x: number; y: number }) => {
     const id = `stimulus-${Date.now()}`;
@@ -113,6 +118,7 @@ export const useStore = create<CanvasStore>((set) => ({
       isRunning: false,
       snapToGrid: true,
       gridSize: 20,
+      waveformType: 'square',
     },
   }),
   startStimulation: () => set((state) => ({

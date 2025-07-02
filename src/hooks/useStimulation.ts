@@ -67,7 +67,7 @@ export function useStimulation() {
       const elapsedTime = currentTime - startTimeRef.current!;
 
       // 计算每个刺激方块的当前状态（基于全局统一时间）
-      const stimulationStates: Record<string, { isVisible: boolean; actualFrequency: number }> = {};
+      const stimulationStates: Record<string, { isVisible: boolean; actualFrequency: number; brightness: number }> = {};
       
       for (const id in items) {
         const item = items[id];
@@ -85,10 +85,23 @@ export function useStimulation() {
           }
           const stateTracker = stateTrackersRef.current[id];
 
-          // 使用与原项目相同的逻辑：基于全局时间的半周期取模
-          const halfPeriod = (1000 / item.frequency) / 2; // 半周期（毫秒）
-          const currentPhase = Math.floor(elapsedTime / halfPeriod) % 2;
-          const isVisible = currentPhase === 0;
+          let isVisible: boolean;
+          let brightness: number;
+
+          if (globalConfig.waveformType === 'sine') {
+            // 正弦波模式：使用连续的亮度变化
+            const period = 1000 / item.frequency; // 完整周期（毫秒）
+            const phase = (elapsedTime % period) / period; // 0-1 之间的相位
+            const sineValue = Math.sin(phase * 2 * Math.PI); // -1 到 1
+            brightness = (sineValue + 1) / 2; // 0 到 1
+            isVisible = brightness > 0.5; // 用于状态追踪的离散值
+          } else {
+            // 方波模式：使用与原项目相同的逻辑
+            const halfPeriod = (1000 / item.frequency) / 2; // 半周期（毫秒）
+            const currentPhase = Math.floor(elapsedTime / halfPeriod) % 2;
+            isVisible = currentPhase === 0;
+            brightness = isVisible ? 1 : 0; // 方波：完全亮或完全暗
+          }
           
           // 检测状态变化并计算实际频率（直接测量法）
           let actualFrequency = stateTracker.avgFreq; // 默认使用上次的平均频率
@@ -120,9 +133,9 @@ export function useStimulation() {
           // 更新状态追踪器的当前状态
           stateTracker.isVisible = isVisible;
           
-          stimulationStates[id] = { isVisible, actualFrequency };
+          stimulationStates[id] = { isVisible, actualFrequency, brightness };
         } else {
-          stimulationStates[id] = { isVisible: true, actualFrequency: 0 };
+          stimulationStates[id] = { isVisible: true, actualFrequency: 0, brightness: 1 };
         }
       }
       
@@ -175,7 +188,7 @@ export function useStimulation() {
         clearTimeout(stopTimer);
       }
     };
-  }, [globalConfig.isRunning, globalConfig.duration, stopStimulation, updateStimulationState, items]);
+  }, [globalConfig.isRunning, globalConfig.duration, globalConfig.waveformType, stopStimulation, updateStimulationState, items]);
 
   const getStats = (): StimulationStats => {
     return statsRef.current;

@@ -45,6 +45,7 @@ export function useDemoSetup() {
       isRunning: false,
       snapToGrid: true,
       gridSize: 20,
+      waveformType: 'square' as const,
     };
 
     loadProject(demoItems, demoConfig);
