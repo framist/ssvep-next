@@ -53,7 +53,7 @@ export function PropertiesPanel() {
   };
 
   return (
-    <Box sx={{ width: '600px', borderLeft: '1px solid #ccc', p: 2, height: '100vh', overflow: 'auto' }}>
+    <Box sx={{ borderLeft: '1px solid #ccc', p: 2, height: '100vh', overflow: 'auto' }}>
       <Typography variant="h6" gutterBottom>
         属性面板
       </Typography>
@@ -239,6 +239,133 @@ export function PropertiesPanel() {
         margin="normal"
         size="small"
       />
+
+      <Divider sx={{ my: 2 }} />
+
+      <Typography variant="subtitle1" gutterBottom>
+        画布设置
+      </Typography>
+
+      <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+        <TextField
+          label="画布宽度"
+          type="number"
+          value={globalConfig.canvasSize.width}
+          onChange={(e) => updateGlobalConfig({ 
+            canvasSize: { 
+              ...globalConfig.canvasSize, 
+              width: Math.max(400, parseInt(e.target.value) || 1920) 
+            } 
+          })}
+          size="small"
+          InputProps={{ inputProps: { min: 400, max: 3000 } }}
+        />
+        <TextField
+          label="画布高度"
+          type="number"
+          value={globalConfig.canvasSize.height}
+          onChange={(e) => updateGlobalConfig({ 
+            canvasSize: { 
+              ...globalConfig.canvasSize, 
+              height: Math.max(300, parseInt(e.target.value) || 1080) 
+            } 
+          })}
+          size="small"
+          InputProps={{ inputProps: { min: 300, max: 2000 } }}
+        />
+      </Box>
+
+      <Divider sx={{ my: 2 }} />
+
+      <Typography variant="subtitle1" gutterBottom>
+        新刺激方块默认属性
+      </Typography>
+
+      <TextField
+        label="默认文本"
+        value={globalConfig.defaultStimulus.text}
+        onChange={(e) => updateGlobalConfig({ 
+          defaultStimulus: { 
+            ...globalConfig.defaultStimulus, 
+            text: e.target.value 
+          } 
+        })}
+        fullWidth
+        margin="normal"
+        size="small"
+      />
+
+      <Box sx={{ mt: 2, mb: 2 }}>
+        <Typography gutterBottom>
+          默认频率：{globalConfig.defaultStimulus.frequency} Hz
+        </Typography>
+        <Slider
+          value={globalConfig.defaultStimulus.frequency}
+          onChange={(_, value) => updateGlobalConfig({ 
+            defaultStimulus: { 
+              ...globalConfig.defaultStimulus, 
+              frequency: value as number 
+            } 
+          })}
+          min={1}
+          max={60}
+          step={0.1}
+          valueLabelDisplay="auto"
+        />
+      </Box>
+
+      <TextField
+        label="默认颜色"
+        type="color"
+        value={globalConfig.defaultStimulus.color}
+        onChange={(e) => updateGlobalConfig({ 
+          defaultStimulus: { 
+            ...globalConfig.defaultStimulus, 
+            color: e.target.value 
+          } 
+        })}
+        fullWidth
+        margin="normal"
+        size="small"
+      />
+
+      <Box sx={{ mt: 2 }}>
+        <Typography gutterBottom>默认尺寸</Typography>
+        <Box sx={{ display: 'flex', gap: 1 }}>
+          <TextField
+            label="默认宽度"
+            type="number"
+            value={globalConfig.defaultStimulus.size.width}
+            onChange={(e) => updateGlobalConfig({ 
+              defaultStimulus: { 
+                ...globalConfig.defaultStimulus, 
+                size: { 
+                  ...globalConfig.defaultStimulus.size, 
+                  width: Math.max(50, parseInt(e.target.value) || 120) 
+                } 
+              } 
+            })}
+            size="small"
+            InputProps={{ inputProps: { min: 50, max: 500 } }}
+          />
+          <TextField
+            label="默认高度"
+            type="number"
+            value={globalConfig.defaultStimulus.size.height}
+            onChange={(e) => updateGlobalConfig({ 
+              defaultStimulus: { 
+                ...globalConfig.defaultStimulus, 
+                size: { 
+                  ...globalConfig.defaultStimulus.size, 
+                  height: Math.max(50, parseInt(e.target.value) || 120) 
+                } 
+              } 
+            })}
+            size="small"
+            InputProps={{ inputProps: { min: 50, max: 500 } }}
+          />
+        </Box>
+      </Box>
 
       <Box sx={{ mt: 2 }}>
         <Typography variant="body2" color="text.secondary">

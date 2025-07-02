@@ -119,8 +119,8 @@ export function Canvas() {
           ref={setNodeRef} 
           onClick={handleCanvasClick}
           sx={{ 
-            width: '200vw', // 扩大画布尺寸
-            height: '150vh',
+            width: globalConfig.canvasSize.width,
+            height: globalConfig.canvasSize.height,
             position: 'relative', 
             backgroundColor: globalConfig.backgroundColor || '#f0f0f0',
             transform: `translate(${viewConfig.panX}px, ${viewConfig.panY}px) scale(${viewConfig.scale})`,

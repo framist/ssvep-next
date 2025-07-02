@@ -46,6 +46,13 @@ export function useDemoSetup() {
       snapToGrid: true,
       gridSize: 20,
       waveformType: 'square' as const,
+      canvasSize: { width: 800, height: 600 },
+      defaultStimulus: {
+        text: 'Stimulus',
+        frequency: 10,
+        size: { width: 120, height: 120 },
+        color: '#ffffff',
+      },
     };
 
     loadProject(demoItems, demoConfig);

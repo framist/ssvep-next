@@ -69,10 +69,10 @@ function App() {
           
           addItem(
             { 
-              text: 'Stimulus', 
-              frequency: 10, 
-              size: { width: 120, height: 120 }, 
-              color: '#ffffff',
+              text: globalConfig.defaultStimulus.text,
+              frequency: globalConfig.defaultStimulus.frequency,
+              size: globalConfig.defaultStimulus.size,
+              color: globalConfig.defaultStimulus.color,
               position: { x: 0, y: 0 } // 临时位置，会被覆盖
             }, 
             { x, y }
@@ -116,10 +116,34 @@ function App() {
 
   return (
     <DndContext onDragEnd={handleDragEnd}>
-      <Box sx={{ display: 'flex', height: '100vh' }}>
-        <Toolbox />
-        <Canvas />
-        <PropertiesPanel />
+      <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+        {/* 左侧工具箱 */}
+        <Box 
+          sx={{ 
+            width: '240px', 
+            flexShrink: 0, 
+            borderRight: '1px solid rgba(0, 0, 0, 0.12)',
+          }}
+        >
+          <Toolbox />
+        </Box>
+
+        {/* 中间画布 */}
+        <Box sx={{ flexGrow: 1, overflow: 'auto', position: 'relative' }}>
+          <Canvas />
+        </Box>
+
+        {/* 右侧属性面板 */}
+        <Box 
+          sx={{ 
+            width: '320px', 
+            flexShrink: 0, 
+            borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
+            overflowY: 'auto'
+          }}
+        >
+          <PropertiesPanel />
+        </Box>
       </Box>
     </DndContext>
   );

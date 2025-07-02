@@ -1,5 +1,5 @@
-import { useRef } from 'react';
-import { Box, Typography, Button, Divider } from '@mui/material';
+import { useRef, useState } from 'react';
+import { Box, Typography, Button, Divider, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { useDraggable } from '@dnd-kit/core';
 import { useStore } from '../stores/canvasStore';
 import { ProjectManager } from '../utils/projectManager';
@@ -50,7 +50,14 @@ export function Toolbox() {
     globalConfig, 
     items,
     loadProject,
+    clearAll,
+    addItem,
   } = useStore();
+  
+  const [openMatrixDialog, setOpenMatrixDialog] = useState(false);
+  const [rows, setRows] = useState(3);
+  const [columns, setColumns] = useState(3);
+  const [spacing, setSpacing] = useState(100);
   
   const { loadDemoProject } = useDemoSetup();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -118,6 +125,59 @@ export function Toolbox() {
     }
   };
 
+  const handleClearCanvas = () => {
+    if (confirm('确定要清空画布吗？所有刺激方块将被移除。')) {
+      clearAll();
+    }
+  };
+
+  const handleOpenMatrixDialog = () => {
+    setOpenMatrixDialog(true);
+  };
+
+  const handleCloseMatrixDialog = () => {
+    setOpenMatrixDialog(false);
+  };
+
+  const handleCreateMatrix = () => {
+    // 获取默认刺激属性
+    const defaultStimulus = globalConfig.defaultStimulus;
+    const itemWidth = defaultStimulus.size.width;
+    const itemHeight = defaultStimulus.size.height;
+    
+    // 计算矩阵起始位置（居中放置）
+    const totalWidth = columns * itemWidth + (columns - 1) * spacing;
+    const totalHeight = rows * itemHeight + (rows - 1) * spacing;
+    const startX = (globalConfig.canvasSize.width - totalWidth) / 2;
+    const startY = (globalConfig.canvasSize.height - totalHeight) / 2;
+    
+    // 创建矩阵
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < columns; c++) {
+        const x = startX + c * (itemWidth + spacing);
+        const y = startY + r * (itemHeight + spacing);
+        
+        // 计算频率变化（可选：按位置变化频率）
+        const baseFrequency = defaultStimulus.frequency;
+        const frequency = baseFrequency + (r * columns + c) * 0.5;
+        
+        addItem(
+          {
+            text: `${r+1}-${c+1}`,
+            frequency,
+            size: { width: itemWidth, height: itemHeight },
+            color: defaultStimulus.color,
+            position: { x: 0, y: 0 } // 临时位置
+          },
+          { x, y }
+        );
+        console.log(`Created item ${r+1}-${c+1} at position (${x}, ${y})`);
+      }
+    }
+    
+    setOpenMatrixDialog(false);
+  };
+
   const handleStartStimulation = () => {
     if (Object.keys(items).length === 0) {
       alert('请先添加至少一个刺激方块');
@@ -128,7 +188,7 @@ export function Toolbox() {
 
   return (
     <>
-      <Box sx={{ width: '500px', borderRight: '1px solid #ccc', p: 2 }}>
+      <Box sx={{ borderRight: '1px solid #ccc', p: 2 }}>
         <Typography variant="h6" gutterBottom>
           工具箱
         </Typography>
@@ -137,6 +197,29 @@ export function Toolbox() {
           拖拽到画布：
         </Typography>
         <DraggableStimulusBox />
+        
+        <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
+          <Button 
+            variant="outlined" 
+            size="small"
+            color="primary"
+            onClick={handleOpenMatrixDialog}
+            sx={{ flex: 1 }}
+          >
+            添加矩阵
+          </Button>
+
+          <Button 
+            variant="outlined" 
+            size="small"
+            color="error"
+            onClick={handleClearCanvas}
+            sx={{ flex: 1 }}
+          >
+            清空画布
+          </Button>
+
+        </Box>
         
         <Divider sx={{ my: 2 }} />
         
@@ -249,6 +332,85 @@ export function Toolbox() {
         </Box>
 
       </Box>
+      
+      {/* 矩阵创建对话框 */}
+      <MatrixDialog
+        open={openMatrixDialog}
+        onClose={handleCloseMatrixDialog}
+        onConfirm={handleCreateMatrix}
+        rows={rows}
+        setRows={setRows}
+        columns={columns}
+        setColumns={setColumns}
+        spacing={spacing}
+        setSpacing={setSpacing}
+      />
     </>
+  );
+}
+
+// 添加矩阵对话框组件
+interface MatrixDialogProps {
+  open: boolean;
+  onClose: () => void;
+  onConfirm: () => void;
+  rows: number;
+  setRows: (rows: number) => void;
+  columns: number;
+  setColumns: (columns: number) => void;
+  spacing: number;
+  setSpacing: (spacing: number) => void;
+}
+
+function MatrixDialog({ 
+  open, 
+  onClose, 
+  onConfirm, 
+  rows, 
+  setRows, 
+  columns, 
+  setColumns, 
+  spacing, 
+  setSpacing 
+}: MatrixDialogProps) {
+  return (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle>添加刺激矩阵</DialogTitle>
+      <DialogContent>
+        <Box sx={{ pt: 1, minWidth: 300 }}>
+          <TextField
+            label="行数"
+            type="number"
+            value={rows}
+            onChange={(e) => setRows(Math.max(1, parseInt(e.target.value) || 1))}
+            fullWidth
+            margin="normal"
+            size="small"
+          />
+          <TextField
+            label="列数"
+            type="number"
+            value={columns}
+            onChange={(e) => setColumns(Math.max(1, parseInt(e.target.value) || 1))}
+            fullWidth
+            margin="normal"
+            size="small"
+          />
+          <TextField
+            label="间距 (像素)"
+            type="number"
+            value={spacing}
+            onChange={(e) => setSpacing(Math.max(0, parseInt(e.target.value) || 0))}
+            fullWidth
+            margin="normal"
+            size="small"
+          />
+        </Box>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={onClose}>取消</Button>
+        <Button onClick={onConfirm} variant="contained">创建</Button>
+      </DialogActions>
+    </Dialog>
   );
 }
