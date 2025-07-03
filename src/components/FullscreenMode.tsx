@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Box, Button, Typography, IconButton } from '@mui/material';
 import { Close as CloseIcon } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../stores/canvasStore';
 import { StimulusBox } from './StimulusBox';
 import { useStimulation } from '../hooks/useStimulation';
@@ -10,6 +11,7 @@ interface FullscreenModeProps {
 }
 
 export function FullscreenMode({ onExit }: FullscreenModeProps) {
+  const { t } = useTranslation();
   const { items, globalConfig, stopStimulation } = useStore();
   const { stats } = useStimulation();
   const [elapsedTime, setElapsedTime] = useState(0);
@@ -104,7 +106,7 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
           onClick={toggleDebugInfo}
           sx={{ opacity: 0.8 }}
         >
-          调试信息
+          {t('fullscreen.debugInfo')}
         </Button>
         <IconButton
           onClick={handleExit}
@@ -135,21 +137,21 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
           }}
         >
           <Typography variant="h6" gutterBottom>
-            调试信息
+            {t('fullscreen.debugInfo')}
           </Typography>
           <Typography variant="body2">
-            已运行时间：{elapsedTime}s
+            {t('fullscreen.elapsedTime')}：{elapsedTime}s
           </Typography>
           {globalConfig.duration > 0 && (
             <Typography variant="body2">
-              剩余时间：{Math.max(0, globalConfig.duration - elapsedTime)}s
+              {t('fullscreen.remainingTime')}：{Math.max(0, globalConfig.duration - elapsedTime)}s
             </Typography>
           )}
           <Typography variant="body2">
-            帧率：{stats.frameRate.toFixed(2)} FPS
+            {t('fullscreen.frameRate')}：{stats.frameRate.toFixed(2)} FPS
           </Typography>
           <Typography variant="body2">
-            刺激方块数量：{Object.keys(items).length}
+            {t('fullscreen.stimulusCount')}：{Object.keys(items).length}
           </Typography>
           {Object.entries(stats.actualFrequencies).filter(([id]) => items[id]?.type === 'stimulus').map(([id, freq]) => (
             <Typography key={id} variant="body2">

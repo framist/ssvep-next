@@ -1,11 +1,13 @@
 import { useRef, useState } from 'react';
 import { Box, Typography, Button, Divider, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@mui/material';
 import { useDraggable } from '@dnd-kit/core';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../stores/canvasStore';
 import { ProjectManager } from '../utils/projectManager';
 import { useDemoSetup } from '../hooks/useDemoSetup';
 
 function DraggableStimulusBox() {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'new-stimulus-box',
     data: {
@@ -40,13 +42,14 @@ function DraggableStimulusBox() {
       }}
     >
       <Typography variant="caption" align="center">
-        刺激方块
+        {t('toolbox.stimulusBox')}
       </Typography>
     </Box>
   );
 }
 
 function DraggableTextBox() {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'new-text-box',
     data: {
@@ -81,13 +84,14 @@ function DraggableTextBox() {
       }}
     >
       <Typography variant="caption" align="center">
-        文本
+        {t('toolbox.textBox')}
       </Typography>
     </Box>
   );
 }
 
 function DraggableIframeBox() {
+  const { t } = useTranslation();
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'new-iframe-box',
     data: {
@@ -122,13 +126,14 @@ function DraggableIframeBox() {
       }}
     >
       <Typography variant="caption" align="center">
-        iframe
+        {t('toolbox.iframeBox')}
       </Typography>
     </Box>
   );
 }
 
 export function Toolbox() {
+  const { t } = useTranslation();
   const { 
     startStimulation, 
     stopStimulation, 
@@ -150,9 +155,9 @@ export function Toolbox() {
   const handleSave = () => {
     try {
       ProjectManager.saveProject(items, globalConfig);
-      alert('项目已保存到本地存储');
+      alert(t('messages.projectSaved'));
     } catch (error) {
-      alert('保存失败：' + (error as Error).message);
+      alert(t('messages.saveFailed') + ': ' + (error as Error).message);
     }
   };
 
@@ -161,9 +166,9 @@ export function Toolbox() {
     if (project) {
       // 加载项目数据到 store
       loadProject(project.items, project.globalConfig);
-      alert('项目已加载');
+      alert(t('messages.projectLoaded'));
     } else {
-      alert('没有找到保存的项目');
+      alert(t('messages.noSavedProject'));
     }
   };
 
@@ -171,7 +176,7 @@ export function Toolbox() {
     try {
       ProjectManager.exportProject(items, globalConfig);
     } catch (error) {
-      alert('导出失败：' + (error as Error).message);
+      alert(t('messages.fileLoadError') + ': ' + (error as Error).message);
     }
   };
 
@@ -187,9 +192,9 @@ export function Toolbox() {
       const project = await ProjectManager.importProject(file);
       // 加载项目数据到 store
       loadProject(project.items, project.globalConfig);
-      alert('项目已导入');
+      alert(t('messages.projectLoaded'));
     } catch (error) {
-      alert('导入失败：' + (error as Error).message);
+      alert(t('messages.fileLoadError') + ': ' + (error as Error).message);
     }
 
     // 清空文件输入
@@ -200,13 +205,13 @@ export function Toolbox() {
     try {
       const link = ProjectManager.generateShareableLink(items, globalConfig);
       navigator.clipboard.writeText(link).then(() => {
-        alert('分享链接已复制到剪贴板');
+        alert(t('messages.linkCopied'));
       }).catch(() => {
         // 如果复制失败，显示链接让用户手动复制
         prompt('请复制以下链接：', link);
       });
     } catch (error) {
-      alert('生成分享链接失败：' + (error as Error).message);
+      alert(t('messages.fileLoadError') + ': ' + (error as Error).message);
     }
   };
 
@@ -266,7 +271,7 @@ export function Toolbox() {
 
   const handleStartStimulation = () => {
     if (Object.keys(items).length === 0) {
-      alert('请先添加至少一个刺激方块');
+      alert(t('messages.noStimulusBoxes'));
       return;
     }
     startStimulation();
@@ -276,11 +281,11 @@ export function Toolbox() {
     <>
       <Box sx={{ borderRight: '1px solid #ccc', p: 2 }}>
         <Typography variant="h6" gutterBottom>
-          工具箱
+          {t('toolbox.title')}
         </Typography>
         
         <Typography variant="body2" sx={{ mb: 1 }}>
-          拖拽到画布：
+          {t('canvas.dropHere')}:
         </Typography>
         <DraggableStimulusBox />
         <DraggableTextBox />
@@ -294,7 +299,7 @@ export function Toolbox() {
             onClick={handleOpenMatrixDialog}
             sx={{ flex: 1 }}
           >
-            添加矩阵
+            {t('toolbox.addMatrix')}
           </Button>
 
           <Button 
@@ -304,7 +309,7 @@ export function Toolbox() {
             onClick={handleClearCanvas}
             sx={{ flex: 1 }}
           >
-            清空画布
+            {t('toolbox.clearCanvas')}
           </Button>
 
         </Box>
@@ -313,7 +318,7 @@ export function Toolbox() {
         
         <Box sx={{ mb: 2 }}>
           <Typography variant="h6" gutterBottom>
-            控制
+            {t('properties.simulation')}
           </Typography>
           <Button
             variant="contained"
@@ -323,7 +328,7 @@ export function Toolbox() {
             onClick={handleStartStimulation}
             disabled={globalConfig.isRunning}
           >
-            开始刺激
+            {t('properties.startStop')}
           </Button>
           <Button
             variant="outlined"
@@ -332,7 +337,7 @@ export function Toolbox() {
             onClick={stopStimulation}
             disabled={!globalConfig.isRunning}
           >
-            停止刺激
+            {t('properties.startStop')}
           </Button>
         </Box>
 
@@ -340,7 +345,7 @@ export function Toolbox() {
 
         <Box>
           <Typography variant="h6" gutterBottom>
-            项目管理
+            {t('toolbox.project.title')}
           </Typography>
           <Button
             variant="contained"
@@ -349,7 +354,7 @@ export function Toolbox() {
             sx={{ mb: 1 }}
             onClick={loadDemoProject}
           >
-            加载演示
+            {t('toolbox.examples.basic')}
           </Button>
           <Button
             variant="outlined"
@@ -358,7 +363,7 @@ export function Toolbox() {
             sx={{ mb: 1 }}
             onClick={handleSave}
           >
-            保存项目
+            {t('toolbox.project.save')}
           </Button>
           <Button
             variant="outlined"
@@ -367,7 +372,7 @@ export function Toolbox() {
             sx={{ mb: 1 }}
             onClick={handleLoad}
           >
-            加载项目
+            {t('toolbox.project.load')}
           </Button>
           <Button
             variant="outlined"
@@ -376,7 +381,7 @@ export function Toolbox() {
             sx={{ mb: 1 }}
             onClick={handleExport}
           >
-            导出文件
+            {t('toolbox.project.export')}
           </Button>
           <Button
             variant="outlined"
@@ -385,7 +390,7 @@ export function Toolbox() {
             sx={{ mb: 1 }}
             onClick={handleImport}
           >
-            导入文件
+            {t('toolbox.project.import')}
           </Button>
           <Button
             variant="outlined"
@@ -393,7 +398,7 @@ export function Toolbox() {
             fullWidth
             onClick={handleShare}
           >
-            生成分享链接
+            {t('toolbox.project.share')}
           </Button>
         </Box>
 
@@ -404,18 +409,18 @@ export function Toolbox() {
           onChange={handleFileChange}
           accept=".json"
           sx={{ display: 'none' }}
-          aria-label="导入项目文件"
+          aria-label={t('toolbox.project.importAriaLabel')}
         />
 
         <Divider sx={{ my: 2 }} />
 
         <Box sx={{ textAlign: 'center', color: '#999' }}>
           <Typography variant="caption">
-            版本：{import.meta.env.VITE_APP_VERSION}
+            {t('toolbox.version', { version: import.meta.env.VITE_APP_VERSION })}
           </Typography>
           <br />
           <Typography variant="caption">
-            by Framist | <a href="https://github.com/framist/ssvep-next">Github</a>
+            ♥️ by Framist | <a href="https://github.com/framist/ssvep-next">Github</a> ⭐
           </Typography>
         </Box>
 
@@ -461,13 +466,15 @@ function MatrixDialog({
   spacing, 
   setSpacing 
 }: MatrixDialogProps) {
+  const { t } = useTranslation();
+
   return (
     <Dialog open={open} onClose={onClose}>
-      <DialogTitle>添加刺激矩阵</DialogTitle>
+      <DialogTitle>{t('toolbox.matrixDialog.title')}</DialogTitle>
       <DialogContent>
         <Box sx={{ pt: 1, minWidth: 300 }}>
           <TextField
-            label="行数"
+            label={t('toolbox.matrixDialog.rows')}
             type="number"
             value={rows}
             onChange={(e) => setRows(Math.max(1, parseInt(e.target.value) || 1))}
@@ -476,7 +483,7 @@ function MatrixDialog({
             size="small"
           />
           <TextField
-            label="列数"
+            label={t('toolbox.matrixDialog.columns')}
             type="number"
             value={columns}
             onChange={(e) => setColumns(Math.max(1, parseInt(e.target.value) || 1))}
@@ -485,7 +492,7 @@ function MatrixDialog({
             size="small"
           />
           <TextField
-            label="间距 (像素)"
+            label={t('toolbox.matrixDialog.spacing')}
             type="number"
             value={spacing}
             onChange={(e) => setSpacing(Math.max(0, parseInt(e.target.value) || 0))}
@@ -496,8 +503,8 @@ function MatrixDialog({
         </Box>
       </DialogContent>
       <DialogActions>
-        <Button onClick={onClose}>取消</Button>
-        <Button onClick={onConfirm} variant="contained">创建</Button>
+        <Button onClick={onClose}>{t('toolbox.matrixDialog.cancel')}</Button>
+        <Button onClick={onConfirm} variant="contained">{t('toolbox.matrixDialog.create')}</Button>
       </DialogActions>
     </Dialog>
   );

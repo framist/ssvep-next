@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { Box } from '@mui/material';
 import { DndContext, type DragEndEvent } from '@dnd-kit/core';
+import { useTranslation } from 'react-i18next';
 import { Toolbox } from './components/Toolbox';
 import { Canvas } from './components/Canvas';
 import { PropertiesPanel } from './components/PropertiesPanel';
 import { FullscreenMode } from './components/FullscreenMode';
+import { LanguageSwitch } from './components/LanguageSwitch';
 import { useStore } from './stores/canvasStore';
 import { ProjectManager } from './utils/projectManager';
 
 function App() {
+  const { t } = useTranslation();
   const { addItem, moveItem, globalConfig, viewConfig, loadProject } = useStore();
   const [showFullscreen, setShowFullscreen] = useState(false);
 
@@ -90,7 +93,7 @@ function App() {
             addItem(
               {
                 type: 'text',
-                text: '文本',
+                text: t('properties.element.text'),
                 size: { width: 200, height: 100 },
                 color: 'rgba(255, 255, 255, 0.8)',
                 position: { x: 0, y: 0 }, // 临时位置，会被覆盖
@@ -152,6 +155,18 @@ function App() {
   return (
     <DndContext onDragEnd={handleDragEnd}>
       <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
+        {/* 顶部工具栏 */}
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 8,
+            right: 8,
+            zIndex: 1000,
+          }}
+        >
+          <LanguageSwitch />
+        </Box>
+
         {/* 左侧工具箱 */}
         <Box
           sx={{

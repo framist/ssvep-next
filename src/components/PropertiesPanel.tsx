@@ -12,9 +12,15 @@ import {
   FormControl,
   InputLabel,
 } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../stores/canvasStore';
 
+const MAX_DURATION_MS = 4000;
+const MIN_DURATION_MS = 60;
+const DURATION_STEP_MS = 60;
+
 export function PropertiesPanel() {
+  const { t } = useTranslation();
   const { 
     items, 
     selectedItemId, 
@@ -61,21 +67,21 @@ export function PropertiesPanel() {
       overflowY: 'scroll',
     }}>
       <Typography variant="h6" gutterBottom>
-        属性面板
+        {t('properties.title')}
       </Typography>
 
       {selectedItem ? (
         <Box>
           <Typography variant="subtitle1" gutterBottom>
             {selectedItem.type === 'stimulus' 
-              ? '刺激方块属性' 
+              ? t('toolbox.stimulusBox') 
               : selectedItem.type === 'text' 
-                ? '文本控件属性' 
-                : 'iframe控件属性'}
+                ? t('toolbox.textBox') 
+                : t('toolbox.iframeBox')}
           </Typography>
 
           <TextField
-            label="文本"
+            label={t('properties.element.text')}
             value={selectedItem.text}
             onChange={(e) => handleItemUpdate('text', e.target.value)}
             fullWidth
@@ -86,7 +92,7 @@ export function PropertiesPanel() {
           {selectedItem.type === 'stimulus' && (
             <Box sx={{ mt: 2, mb: 2 }}>
               <Typography gutterBottom>
-                频率：{selectedItem.frequency} Hz
+                {t('properties.frequency')}：{selectedItem.frequency} Hz
               </Typography>
               <Slider
                 value={selectedItem.frequency}
@@ -103,7 +109,7 @@ export function PropertiesPanel() {
             <>
               <Box sx={{ mt: 2, mb: 2 }}>
                 <Typography gutterBottom>
-                  字体大小：{selectedItem.fontSize}px
+                  {t('properties.element.fontSize')}：{selectedItem.fontSize}px
                 </Typography>
                 <Slider
                   value={selectedItem.fontSize || 16}
@@ -116,15 +122,15 @@ export function PropertiesPanel() {
               </Box>
 
               <FormControl fullWidth margin="normal" size="small">
-                <InputLabel>字体粗细</InputLabel>
+                <InputLabel>{t('properties.element.fontWeight')}</InputLabel>
                 <Select
                   value={selectedItem.fontWeight || 'normal'}
-                  label="字体粗细"
+                  label={t('properties.element.fontWeight')}
                   onChange={(e) => handleItemUpdate('fontWeight', e.target.value)}
                 >
-                  <MenuItem value="normal">正常</MenuItem>
-                  <MenuItem value="bold">粗体</MenuItem>
-                  <MenuItem value="lighter">细体</MenuItem>
+                  <MenuItem value="normal">{t('properties.fontWeight.normal')}</MenuItem>
+                  <MenuItem value="bold">{t('properties.fontWeight.bold')}</MenuItem>
+                  <MenuItem value="lighter">{t('properties.fontWeight.lighter')}</MenuItem>
                 </Select>
               </FormControl>
             </>
@@ -132,7 +138,7 @@ export function PropertiesPanel() {
 
           {selectedItem.type === 'iframe' && (
             <TextField
-              label="URL"
+              label={t('properties.element.url')}
               value={selectedItem.url || ''}
               onChange={(e) => handleItemUpdate('url', e.target.value)}
               fullWidth
@@ -143,7 +149,7 @@ export function PropertiesPanel() {
           )}
 
           <TextField
-            label="颜色"
+            label={t('properties.foregroundColor')}
             type="color"
             value={selectedItem.color}
             onChange={(e) => handleItemUpdate('color', e.target.value)}
@@ -153,17 +159,17 @@ export function PropertiesPanel() {
           />
 
           <Box sx={{ mt: 2 }}>
-            <Typography gutterBottom>尺寸</Typography>
+            <Typography gutterBottom>{t('properties.size')}</Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <TextField
-                label="宽度"
+                label={t('properties.width')}
                 type="number"
                 value={selectedItem.size.width}
                 onChange={(e) => handleSizeUpdate('width', parseInt(e.target.value) || 100)}
                 size="small"
               />
               <TextField
-                label="高度"
+                label={t('properties.height')}
                 type="number"
                 value={selectedItem.size.height}
                 onChange={(e) => handleSizeUpdate('height', parseInt(e.target.value) || 100)}
@@ -173,17 +179,17 @@ export function PropertiesPanel() {
           </Box>
 
           <Box sx={{ mt: 2 }}>
-            <Typography gutterBottom>位置</Typography>
+            <Typography gutterBottom>{t('properties.element.position')}</Typography>
             <Box sx={{ display: 'flex', gap: 1 }}>
               <TextField
-                label="X"
+                label={t('properties.element.x')}
                 type="number"
                 value={Math.round(selectedItem.position.x)}
                 onChange={(e) => handlePositionUpdate('x', parseInt(e.target.value) || 0)}
                 size="small"
               />
               <TextField
-                label="Y"
+                label={t('properties.element.y')}
                 type="number"
                 value={Math.round(selectedItem.position.y)}
                 onChange={(e) => handlePositionUpdate('y', parseInt(e.target.value) || 0)}
@@ -199,31 +205,31 @@ export function PropertiesPanel() {
             fullWidth
             sx={{ mt: 2 }}
           >
-            删除方块
+            {t('properties.deleteItem')}
           </Button>
 
           <Divider sx={{ my: 3 }} />
         </Box>
       ) : (
         <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-          选择一个刺激方块来编辑属性
+          {t('properties.noSelection')}
         </Typography>
       )}
 
       <Divider sx={{ my: 2 }} />
       <Typography variant="h6" gutterBottom>
-        全局设置
+        {t('properties.globalSettings')}
       </Typography>
 
       <FormControl fullWidth margin="normal" size="small">
-        <InputLabel>波形类型</InputLabel>
+        <InputLabel>{t('properties.waveform')}</InputLabel>
         <Select
           value={globalConfig.waveformType}
-          label="波形类型"
+          label={t('properties.waveform')}
           onChange={(e) => updateGlobalConfig({ waveformType: e.target.value as 'square' | 'sine' })}
         >
-          <MenuItem value="square">方波</MenuItem>
-          <MenuItem value="sine">正弦波</MenuItem>
+          <MenuItem value="square">{t('properties.square')}</MenuItem>
+          <MenuItem value="sine">{t('properties.sine')}</MenuItem>
         </Select>
       </FormControl>
 
@@ -231,7 +237,7 @@ export function PropertiesPanel() {
         <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems: 'center' }}>
           <Typography gutterBottom
             sx={{ flex: 2 }}>
-            实验时间：{globalConfig.duration === -1 ? '无限' : `${globalConfig.duration} 秒`}
+            {t('properties.duration')}：{globalConfig.duration === -1 ? t('properties.infinite') : `${globalConfig.duration} ${t('properties.seconds')}`}
           </Typography>
           <Button
             variant="outlined"
@@ -239,25 +245,26 @@ export function PropertiesPanel() {
             onClick={() => updateGlobalConfig({ duration: -1 })}
             sx={{  flex: 1 }}
           >
-            无限
+            {t('properties.infinite')}
           </Button>
         </Box>
         <Slider
-          value={globalConfig.duration === -1 ? 360 : globalConfig.duration}
+          value={globalConfig.duration === -1 ? MAX_DURATION_MS : globalConfig.duration}
           onChange={(_, value) => {
             // 当滑块拖到最大值时，设置为无限时长
-            updateGlobalConfig({ duration: value === 360 ? -1 : value as number });
+            updateGlobalConfig({ duration: value === MAX_DURATION_MS ? -1 : value as number });
           }}
-          min={5}
-          max={360}
-          step={5}
+          min={MIN_DURATION_MS}
+          max={MAX_DURATION_MS}
+          step={DURATION_STEP_MS}
           valueLabelDisplay="auto"
           marks={[
-            { value: 5, label: '5s' },
-            { value: 60, label: '1m' },
-            { value: 120, label: '2m' },
-            { value: 300, label: '5m' },
-            { value: 360, label: '无限' }
+            { value: MIN_DURATION_MS, label: '1m' },
+            { value: 600, label: '10m' },
+            { value: 1200, label: '20m' },
+            { value: 1800, label: '30m' },
+            { value: 3600, label: '1h' },
+            { value: MAX_DURATION_MS, label: '♾️' } // 显示为无限
           ]}
         />
       </Box>
@@ -269,14 +276,14 @@ export function PropertiesPanel() {
             onChange={(e) => updateGlobalConfig({ snapToGrid: e.target.checked })}
           />
         }
-        label="启用网格吸附"
+        label={t('properties.snapToGrid')}
         sx={{ mb: 2 }}
       />
 
       {globalConfig.snapToGrid && (
         <Box sx={{ mb: 2 }}>
           <Typography gutterBottom>
-            网格大小：{globalConfig.gridSize}px
+            {t('properties.gridSize')}：{globalConfig.gridSize}px
           </Typography>
           <Slider
             value={globalConfig.gridSize}
@@ -290,7 +297,7 @@ export function PropertiesPanel() {
       )}
 
       <TextField
-        label="背景颜色"
+        label={t('properties.backgroundColor')}
         type="color"
         value={globalConfig.backgroundColor}
         onChange={(e) => updateGlobalConfig({ backgroundColor: e.target.value })}
@@ -302,12 +309,12 @@ export function PropertiesPanel() {
       <Divider sx={{ my: 2 }} />
 
       <Typography variant="subtitle1" gutterBottom>
-        画布设置
+        {t('properties.canvasSize')}
       </Typography>
 
       <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
         <TextField
-          label="画布宽度"
+          label={t('properties.width')}
           type="number"
           value={globalConfig.canvasSize.width}
           onChange={(e) => updateGlobalConfig({ 
@@ -319,7 +326,7 @@ export function PropertiesPanel() {
           size="small"
         />
         <TextField
-          label="画布高度"
+          label={t('properties.height')}
           type="number"
           value={globalConfig.canvasSize.height}
           onChange={(e) => updateGlobalConfig({ 
@@ -335,11 +342,11 @@ export function PropertiesPanel() {
       <Divider sx={{ my: 2 }} />
 
       <Typography variant="subtitle1" gutterBottom>
-        方块默认属性
+        {t('properties.defaultProperties')}
       </Typography>
 
       <TextField
-        label="默认文本"
+        label={t('properties.element.text')}
         value={globalConfig.defaultStimulus.text}
         onChange={(e) => updateGlobalConfig({ 
           defaultStimulus: { 
@@ -354,7 +361,7 @@ export function PropertiesPanel() {
 
       <Box sx={{ mt: 2, mb: 2 }}>
         <Typography gutterBottom>
-          默认频率：{globalConfig.defaultStimulus.frequency} Hz
+          {t('properties.frequency')}：{globalConfig.defaultStimulus.frequency} Hz
         </Typography>
         <Slider
           value={globalConfig.defaultStimulus.frequency}
@@ -372,7 +379,7 @@ export function PropertiesPanel() {
       </Box>
 
       <TextField
-        label="默认颜色"
+        label={t('properties.foregroundColor')}
         type="color"
         value={globalConfig.defaultStimulus.color}
         onChange={(e) => updateGlobalConfig({ 
@@ -387,10 +394,10 @@ export function PropertiesPanel() {
       />
 
       <Box sx={{ mt: 2 }}>
-        <Typography gutterBottom>默认尺寸</Typography>
+        <Typography gutterBottom>{t('properties.size')}</Typography>
         <Box sx={{ display: 'flex', gap: 1 }}>
           <TextField
-            label="默认宽度"
+            label={t('properties.width')}
             type="number"
             value={globalConfig.defaultStimulus.size.width}
             onChange={(e) => updateGlobalConfig({ 
@@ -405,7 +412,7 @@ export function PropertiesPanel() {
             size="small"
           />
           <TextField
-            label="默认高度"
+            label={t('properties.height')}
             type="number"
             value={globalConfig.defaultStimulus.size.height}
             onChange={(e) => updateGlobalConfig({ 
@@ -422,11 +429,7 @@ export function PropertiesPanel() {
         </Box>
       </Box>
 
-      <Box sx={{ mt: 2 }}>
-        <Typography variant="body2" color="text.secondary">
-          状态：{globalConfig.isRunning ? '运行中' : '已停止'}
-        </Typography>
-      </Box>
+
     </Box>
   );
 }

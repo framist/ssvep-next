@@ -1,0 +1,113 @@
+{
+  "app": {
+    "title": "SSVEP Experiment Design Tool"
+  },
+  "toolbox": {
+    "title": "Toolbox",
+    "stimulusBox": "Stimulus Box",
+    "textBox": "Text",
+    "iframeBox": "Iframe",
+    "clearCanvas": "Clear Canvas",
+    "addMatrix": "Add Matrix",
+    "matrixDialog": {
+      "title": "Create Stimulus Matrix",
+      "rows": "Rows",
+      "columns": "Columns",
+      "spacing": "Spacing (pixels)",
+      "cancel": "Cancel",
+      "create": "Create"
+    },
+    "project": {
+      "title": "Project Management",
+      "save": "Save Project",
+      "load": "Load Project",
+      "share": "Share Project",
+      "export": "Export Project",
+      "import": "Import Project",
+      "examples": "Example Projects",
+    "importAriaLabel": "Import project file"
+    },
+    "examples": {
+      "basic": "Basic Example",
+      "speller": "Speller Example"
+    },
+    "version": "Version {{version}}"
+  },
+  "canvas": {
+    "title": "Canvas",
+    "dropHere": "Drop elements here",
+    "emptyCanvasTitle": "Drag stimulus boxes from the left toolbar here to start designing",
+    "emptyCanvasSubtitle": "Or click \"Load Demo\" to see examples",
+    "canvasHelp": "Mouse wheel to zoom canvas, hold middle button or Ctrl+ left click to pan canvas",
+    "zoomIn": "Zoom In",
+    "zoomOut": "Zoom Out",
+    "resetView": "Reset View"
+  },
+  "properties": {
+    "title": "Properties Panel",
+    "noSelection": "Please select an element",
+    "globalSettings": "Global Settings",
+    "canvasSize": "Canvas Size",
+    "width": "Width",
+    "height": "Height",
+    "waveform": "Waveform Type",
+    "square": "Square Wave",
+    "sine": "Sine Wave",
+    "defaultProperties": "Default Properties",
+    "size": "Size",
+    "frequency": "Frequency",
+    "foregroundColor": "Foreground Color",
+    "backgroundColor": "Background Color",
+    "simulation": "Stimulation Control",
+    "startStop": "Start/Stop",
+    "duration": "Duration",
+    "infinite": "Infinite",
+    "seconds": "s",
+    "snapToGrid": "Snap to Grid",
+    "gridSize": "Grid Size",
+    "fullscreen": "Fullscreen Mode",
+    "element": {
+      "position": "Position",
+      "x": "X Position",
+      "y": "Y Position",
+      "text": "Text Content",
+      "fontSize": "Font Size",
+      "fontWeight": "Font Weight",
+      "url": "URL",
+      "enabled": "Enabled"
+    },
+    "fontWeight": {
+      "normal": "Normal",
+      "bold": "Bold",
+      "lighter": "Lighter"
+    },
+    "deleteItem": "Delete Item"
+  },
+  "fullscreen": {
+    "exit": "Exit Fullscreen",
+    "frequency": "Frequency",
+    "avgFrequency": "Avg Frequency",
+    "frameRate": "Frame Rate",
+    "debugInfo": "Debug Info",
+    "elapsedTime": "Elapsed Time",
+    "remainingTime": "Remaining Time",
+    "stimulusCount": "Stimulus Count"
+  },
+  "language": {
+    "switch": "Switch Language",
+    "chinese": "中文",
+    "english": "English"
+  },
+  "messages": {
+    "projectSaved": "Project saved",
+    "projectLoaded": "Project loaded",
+    "linkCopied": "Share link copied to clipboard",
+    "matrixCreated": "Matrix created",
+    "canvasCleared": "Canvas cleared",
+    "invalidFileFormat": "Invalid file format",
+    "fileLoadError": "Failed to load file",
+    "projectSaveError": "Failed to save project",
+    "shareGenError": "Failed to generate share link",
+    "noStimulusBoxes": "Please add at least one stimulus box first"
+  }
+}

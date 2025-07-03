@@ -1,6 +1,7 @@
 import { Box, Typography, IconButton } from '@mui/material';
 import { ZoomIn, ZoomOut, CenterFocusStrong } from '@mui/icons-material';
 import { useDroppable } from '@dnd-kit/core';
+import { useTranslation } from 'react-i18next';
 import { useStore } from '../stores/canvasStore';
 import { StimulusBox } from './StimulusBox';
 import { TextBox } from './TextBox';
@@ -8,6 +9,7 @@ import { IframeBox } from './IframeBox';
 import { useRef, useCallback, useState } from 'react';
 
 export function Canvas() {
+  const { t } = useTranslation();
   const { setNodeRef } = useDroppable({
     id: 'canvas',
   });
@@ -90,13 +92,13 @@ export function Canvas() {
           p: 0.5,
         }}
       >
-        <IconButton size="small" onClick={handleZoomIn} title="放大">
+        <IconButton size="small" onClick={handleZoomIn} title={t('canvas.zoomIn')}>
           <ZoomIn />
         </IconButton>
-        <IconButton size="small" onClick={handleZoomOut} title="缩小">
+        <IconButton size="small" onClick={handleZoomOut} title={t('canvas.zoomOut')}>
           <ZoomOut />
         </IconButton>
-        <IconButton size="small" onClick={handleResetView} title="重置视图">
+        <IconButton size="small" onClick={handleResetView} title={t('canvas.resetView')}>
           <CenterFocusStrong />
         </IconButton>
       </Box>
@@ -116,41 +118,41 @@ export function Canvas() {
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
       >
-        <Box 
+        <Box
           id="canvas"
-          ref={setNodeRef} 
+          ref={setNodeRef}
           onClick={handleCanvasClick}
-          sx={{ 
+          sx={{
             width: globalConfig.canvasSize.width,
             height: globalConfig.canvasSize.height,
-            position: 'relative', 
+            position: 'relative',
             backgroundColor: globalConfig.backgroundColor || '#f0f0f0',
             transform: `translate(${viewConfig.panX}px, ${viewConfig.panY}px) scale(${viewConfig.scale})`,
             transformOrigin: '0 0',
             // 添加网格背景（当启用网格吸附时）
-            backgroundImage: globalConfig.snapToGrid 
+            backgroundImage: globalConfig.snapToGrid
               ? `radial-gradient(circle, #ccc 1px, transparent 1px)`
               : 'none',
-            backgroundSize: globalConfig.snapToGrid 
+            backgroundSize: globalConfig.snapToGrid
               ? `${globalConfig.gridSize}px ${globalConfig.gridSize}px`
               : 'initial',
           }}
         >
           {Object.values(items).map((item) => {
             const commonProps = {
-              key: item.id, 
+              key: item.id,
               item: item,
               onClick: () => handleItemClick(item.id),
-              style: { 
-                position: 'absolute' as const, 
-                left: item.position.x, 
+              style: {
+                position: 'absolute' as const,
+                left: item.position.x,
                 top: item.position.y,
                 width: item.size.width,
                 height: item.size.height,
               }
             };
-            
-            switch(item.type) {
+
+            switch (item.type) {
               case 'text':
                 return <TextBox {...commonProps} />;
               case 'iframe':
@@ -160,7 +162,7 @@ export function Canvas() {
                 return <StimulusBox {...commonProps} />;
             }
           })}
-          
+
           {/* 如果没有项目，显示提示信息 */}
           {Object.keys(items).length === 0 && (
             <Box
@@ -174,17 +176,13 @@ export function Canvas() {
               }}
             >
               <Typography variant="h4" gutterBottom>
-                从左侧工具栏拖拽刺激方块到这里开始设计
+                {t('canvas.emptyCanvasTitle')}
               </Typography>
               <Typography variant="h6" gutterBottom>
-                或者点击"加载演示"查看示例
+                {t('canvas.emptyCanvasSubtitle')}
               </Typography>
-              <Typography variant="body2">
-                <br />
-                <br />
-                <br />
-                <br />
-                鼠标滚轮缩放画布，按住中键或 Ctrl+ 左键平移画布
+              <Typography variant="body2" mt={8}>
+                {t('canvas.canvasHelp')}
               </Typography>
             </Box>
           )}

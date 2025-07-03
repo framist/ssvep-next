@@ -1,4 +1,5 @@
 import type { StimulusItem, GlobalConfig } from '../stores/canvasStore';
+import i18n from '../i18n';
 
 export interface ProjectData {
   items: Record<string, StimulusItem>;
@@ -23,7 +24,7 @@ export class ProjectManager {
       localStorage.setItem(this.STORAGE_KEY, JSON.stringify(projectData));
     } catch (error) {
       console.error('Failed to save project:', error);
-      throw new Error('保存项目失败');
+      throw new Error(i18n.t('messages.projectSaveError'));
     }
   }
 
@@ -70,10 +71,10 @@ export class ProjectManager {
           const projectData: ProjectData = JSON.parse(result);
           resolve(projectData);
         } catch {
-          reject(new Error('无效的项目文件格式'));
+          reject(new Error(i18n.t('messages.invalidFileFormat')));
         }
       };
-      reader.onerror = () => reject(new Error('读取文件失败'));
+      reader.onerror = () => reject(new Error(i18n.t('messages.fileLoadError')));
       reader.readAsText(file);
     });
   }
@@ -94,7 +95,7 @@ export class ProjectManager {
       return url.toString();
     } catch (error) {
       console.error('Failed to generate shareable link:', error);
-      throw new Error('生成分享链接失败');
+      throw new Error(i18n.t('messages.shareGenError'));
     }
   }
 

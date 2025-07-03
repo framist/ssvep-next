@@ -1,4 +1,12 @@
-# SSVEP Next: SSVEP 可视化 Web 快速实现
+[![GitHub License](https://img.shields.io/github/license/framist/ssvep-next)](https://github.com/framist/ssvep-next/blob/main/LICENSE)
+[![GitHub Stars](https://img.shields.io/github/stars/framist/ssvep-next?style=social)](https://github.com/framist/ssvep-next/stargazers)
+
+**SSVEP Visualization Web Fast Implementation** i18n support, drag-and-drop interface, and real-time stimulation rendering.
+
+**SSVEP Next: SSVEP 可视化 Web 快速实现** —— i18n 支持、拖拽界面和实时刺激渲染。
+
+# SSVEP-Next
+
 
 [Demo | 在线使用](https://framist.github.io/ssvep-next/ssvep-next/)
 
@@ -22,6 +30,7 @@ SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 
 - **全局默认配置**: 统一设置新刺激块的初始属性，简化重复操作。
 - **多种控件支持**: 除了刺激方块外，还支持文本控件和iframe嵌入控件。
 - **布局优化**: 采用稳定的三栏式布局，交互体验更流畅。
+- **国际化支持**: 支持中英文界面切换，自动检测浏览器语言偏好。
 - **模块化组件：** 清晰的项目结构，便于功能扩展和维护。
 
 ## 技术栈
@@ -44,6 +53,7 @@ SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 
 | **频率测量** | 直接测量瞬时/平均频率 | ✅ **继承并优化**：实现相同的直接测量法，并增加滑动窗口平滑 |
 | **帧率监控** | 启动前预估 | ✅ **实时动态监控**，运行时反馈更准确 |
 | **分享与协作**| 生成静态 URL | ✅ **继承并优化** 一键分享链接，轻松复现实验设计 |
+| **国际化** | 无 | ✅ **i18n 支持** (中英文切换) |
 | **部署** | 手动上传文件 | ✅ **CI/CD 自动化部署** (GitHub Actions) |
 
 
