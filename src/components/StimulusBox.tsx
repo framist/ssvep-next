@@ -71,7 +71,7 @@ export function StimulusBox({ item, onClick, style }: StimulusBoxProps) {
         height: item.size.height,
         border: globalConfig.isRunning 
           ? ('2px solid transparent')
-          : (isSelected ? '2px solid #1976d2' : '2px solid rgba(255, 255, 255, 0.5)'),
+          : (isSelected ? '2px solid #1976d2' : '2px solid rgba(0, 0, 0, 0.1)'),
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',

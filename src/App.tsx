@@ -126,8 +126,9 @@ function App() {
 
       if (currentItem) {
         // 考虑缩放因子调整拖拽距离
-        const deltaX = event.delta.x / viewConfig.scale;
-        const deltaY = event.delta.y / viewConfig.scale;
+        console.log('Drag End:', activeId, event.delta, viewConfig.scale);
+        const deltaX = event.delta.x / viewConfig.scale ;
+        const deltaY = event.delta.y / viewConfig.scale ;
 
         // 基于当前位置和拖拽偏移量计算新位置
         let newX = Math.max(0, currentItem.position.x + deltaX);

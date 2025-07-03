@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useStore } from '../stores/canvasStore';
 import { StimulusBox } from './StimulusBox';
 import { useStimulation } from '../hooks/useStimulation';
+import { IframeBox } from './IframeBox';
+import { TextBox } from './TextBox';
 
 interface FullscreenModeProps {
   onExit: () => void;
@@ -101,17 +103,16 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
         }}
       >
         <Button
-          variant="contained"
+          variant="outlined"
           size="small"
           onClick={toggleDebugInfo}
-          sx={{ opacity: 0.8 }}
         >
           {t('fullscreen.debugInfo')}
         </Button>
         <IconButton
           onClick={handleExit}
           sx={{
-            backgroundColor: 'rgba(255, 255, 255, 0.8)',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
             '&:hover': {
               backgroundColor: 'rgba(255, 255, 255, 0.9)',
             },
@@ -134,6 +135,8 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
             borderRadius: 1,
             minWidth: 200,
             zIndex: 10000,
+            overflow: 'auto',
+            maxHeight: 'calc(100vh - 40px)',
           }}
         >
           <Typography variant="h6" gutterBottom>
@@ -173,7 +176,7 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
         }}
       >
         <Typography variant="h4">
-          {globalConfig.duration === -1 
+          {globalConfig.duration === -1
             ? `${Math.floor(elapsedTime / 60)}:${(elapsedTime % 60).toString().padStart(2, '0')}`
             : `${Math.max(0, globalConfig.duration - elapsedTime)}s`
           }
@@ -181,20 +184,30 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
       </Box>
 
       {/* 刺激方块 */}
-      {Object.values(items).map((item) => (
-        <StimulusBox
-          key={item.id}
-          item={item}
-          style={{
-            position: 'absolute',
+      {Object.values(items).map((item) => {
+        const commonProps = {
+          item: item,
+          style: {
+            position: 'absolute' as const,
             left: item.position.x,
             top: item.position.y,
             width: item.size.width,
             height: item.size.height,
-            pointerEvents: 'none',
-          }}
-        />
-      ))}
+            pointerEvents: 'none' as const, // 禁止交互
+          }
+        };
+
+        switch (item.type) {
+          case 'text':
+            return <TextBox key={item.id} {...commonProps} />;
+          case 'iframe':
+            return <IframeBox key={item.id} {...commonProps} />;
+          case 'stimulus':
+            return <StimulusBox key={item.id} {...commonProps} />;
+          default:
+            return null;
+        }
+      })}
     </Box>
   );
 }

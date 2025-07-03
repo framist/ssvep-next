@@ -8,7 +8,7 @@
     "textBox": "文本",
     "iframeBox": "网页嵌入",
     "clearCanvas": "清空画布",
-    "addMatrix": "添加矩阵",
+    "addMatrix": "添加刺激矩阵",
     "matrixDialog": {
       "title": "创建刺激矩阵",
       "rows": "行数",
@@ -30,7 +30,7 @@
     "examples": {
       "basic": "基础示例",
       "keyboard": "键盘示例",
-      "gamepad": "游戏手柄示例",
+      "gamepad": "手柄示例",
       "speller": "拼写器示例"
     },
     "version": "版本：{{version}}"
