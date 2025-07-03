@@ -5,7 +5,7 @@
 
 **SSVEP 可视化 Web 快速实现** —— i18n 支持、拖拽界面和实时刺激渲染。
 
-[Demo | 在线使用](https://framist.github.io/ssvep-next/ssvep-next/)
+[Demo | 在线使用](https://framist.github.io/ssvep-next/)
 
 # SSVEP Next
 
