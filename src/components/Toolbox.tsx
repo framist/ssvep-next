@@ -8,6 +8,9 @@ import { useDemoSetup } from '../hooks/useDemoSetup';
 function DraggableStimulusBox() {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
     id: 'new-stimulus-box',
+    data: {
+      type: 'stimulus'
+    }
   });
 
   const style = transform ? {
@@ -38,6 +41,88 @@ function DraggableStimulusBox() {
     >
       <Typography variant="caption" align="center">
         刺激方块
+      </Typography>
+    </Box>
+  );
+}
+
+function DraggableTextBox() {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: 'new-text-box',
+    data: {
+      type: 'text'
+    }
+  });
+
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  } : undefined;
+
+  return (
+    <Box
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      data-testid="toolbox-draggable-text"
+      sx={{
+        width: 80,
+        height: 40,
+        border: '2px dashed #4caf50',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'grab',
+        backgroundColor: '#f5f5f5',
+        mb: 2,
+        '&:hover': {
+          backgroundColor: '#e8f5e9',
+        },
+      }}
+    >
+      <Typography variant="caption" align="center">
+        文本
+      </Typography>
+    </Box>
+  );
+}
+
+function DraggableIframeBox() {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: 'new-iframe-box',
+    data: {
+      type: 'iframe'
+    }
+  });
+
+  const style = transform ? {
+    transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+  } : undefined;
+
+  return (
+    <Box
+      ref={setNodeRef}
+      style={style}
+      {...listeners}
+      {...attributes}
+      data-testid="toolbox-draggable-iframe"
+      sx={{
+        width: 80,
+        height: 40,
+        border: '2px dashed #ff9800',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        cursor: 'grab',
+        backgroundColor: '#f5f5f5',
+        mb: 2,
+        '&:hover': {
+          backgroundColor: '#fff3e0',
+        },
+      }}
+    >
+      <Typography variant="caption" align="center">
+        iframe
       </Typography>
     </Box>
   );
@@ -163,6 +248,7 @@ export function Toolbox() {
         
         addItem(
           {
+            type: 'stimulus',
             text: `${r+1}-${c+1}`,
             frequency,
             size: { width: itemWidth, height: itemHeight },
@@ -197,6 +283,8 @@ export function Toolbox() {
           拖拽到画布：
         </Typography>
         <DraggableStimulusBox />
+        <DraggableTextBox />
+        <DraggableIframeBox />
         
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
           <Button 

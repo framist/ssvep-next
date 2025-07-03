@@ -3,6 +3,8 @@ import { ZoomIn, ZoomOut, CenterFocusStrong } from '@mui/icons-material';
 import { useDroppable } from '@dnd-kit/core';
 import { useStore } from '../stores/canvasStore';
 import { StimulusBox } from './StimulusBox';
+import { TextBox } from './TextBox';
+import { IframeBox } from './IframeBox';
 import { useRef, useCallback, useState } from 'react';
 
 export function Canvas() {
@@ -134,20 +136,30 @@ export function Canvas() {
               : 'initial',
           }}
         >
-          {Object.values(items).map((item) => (
-            <StimulusBox 
-              key={item.id} 
-              item={item}
-              onClick={() => handleItemClick(item.id)}
-              style={{ 
-                position: 'absolute', 
+          {Object.values(items).map((item) => {
+            const commonProps = {
+              key: item.id, 
+              item: item,
+              onClick: () => handleItemClick(item.id),
+              style: { 
+                position: 'absolute' as const, 
                 left: item.position.x, 
                 top: item.position.y,
                 width: item.size.width,
                 height: item.size.height,
-              }}
-            />
-          ))}
+              }
+            };
+            
+            switch(item.type) {
+              case 'text':
+                return <TextBox {...commonProps} />;
+              case 'iframe':
+                return <IframeBox {...commonProps} />;
+              case 'stimulus':
+              default:
+                return <StimulusBox {...commonProps} />;
+            }
+          })}
           
           {/* 如果没有项目，显示提示信息 */}
           {Object.keys(items).length === 0 && (

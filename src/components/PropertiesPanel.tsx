@@ -53,7 +53,13 @@ export function PropertiesPanel() {
   };
 
   return (
-    <Box sx={{ borderLeft: '1px solid #ccc', p: 2, height: '100vh', overflow: 'auto' }}>
+    <Box sx={{ 
+      borderLeft: '1px solid #ccc', 
+      p: 2, 
+      height: '100vh',
+      overflowX: 'hidden',
+      overflowY: 'scroll',
+    }}>
       <Typography variant="h6" gutterBottom>
         属性面板
       </Typography>
@@ -61,7 +67,11 @@ export function PropertiesPanel() {
       {selectedItem ? (
         <Box>
           <Typography variant="subtitle1" gutterBottom>
-            刺激方块属性
+            {selectedItem.type === 'stimulus' 
+              ? '刺激方块属性' 
+              : selectedItem.type === 'text' 
+                ? '文本控件属性' 
+                : 'iframe控件属性'}
           </Typography>
 
           <TextField
@@ -73,19 +83,64 @@ export function PropertiesPanel() {
             size="small"
           />
 
-          <Box sx={{ mt: 2, mb: 2 }}>
-            <Typography gutterBottom>
-              频率：{selectedItem.frequency} Hz
-            </Typography>
-            <Slider
-              value={selectedItem.frequency}
-              onChange={(_, value) => handleItemUpdate('frequency', value)}
-              min={1}
-              max={60}
-              step={0.1}
-              valueLabelDisplay="auto"
+          {selectedItem.type === 'stimulus' && (
+            <Box sx={{ mt: 2, mb: 2 }}>
+              <Typography gutterBottom>
+                频率：{selectedItem.frequency} Hz
+              </Typography>
+              <Slider
+                value={selectedItem.frequency}
+                onChange={(_, value) => handleItemUpdate('frequency', value)}
+                min={1}
+                max={60}
+                step={0.1}
+                valueLabelDisplay="auto"
+              />
+            </Box>
+          )}
+
+          {selectedItem.type === 'text' && (
+            <>
+              <Box sx={{ mt: 2, mb: 2 }}>
+                <Typography gutterBottom>
+                  字体大小：{selectedItem.fontSize}px
+                </Typography>
+                <Slider
+                  value={selectedItem.fontSize || 16}
+                  onChange={(_, value) => handleItemUpdate('fontSize', value)}
+                  min={10}
+                  max={72}
+                  step={1}
+                  valueLabelDisplay="auto"
+                />
+              </Box>
+
+              <FormControl fullWidth margin="normal" size="small">
+                <InputLabel>字体粗细</InputLabel>
+                <Select
+                  value={selectedItem.fontWeight || 'normal'}
+                  label="字体粗细"
+                  onChange={(e) => handleItemUpdate('fontWeight', e.target.value)}
+                >
+                  <MenuItem value="normal">正常</MenuItem>
+                  <MenuItem value="bold">粗体</MenuItem>
+                  <MenuItem value="lighter">细体</MenuItem>
+                </Select>
+              </FormControl>
+            </>
+          )}
+
+          {selectedItem.type === 'iframe' && (
+            <TextField
+              label="URL"
+              value={selectedItem.url || ''}
+              onChange={(e) => handleItemUpdate('url', e.target.value)}
+              fullWidth
+              margin="normal"
+              size="small"
+              placeholder="https://example.com"
             />
-          </Box>
+          )}
 
           <TextField
             label="颜色"
@@ -155,7 +210,8 @@ export function PropertiesPanel() {
         </Typography>
       )}
 
-      <Typography variant="subtitle1" gutterBottom>
+      <Divider sx={{ my: 2 }} />
+      <Typography variant="h6" gutterBottom>
         全局设置
       </Typography>
 
@@ -172,9 +228,20 @@ export function PropertiesPanel() {
       </FormControl>
 
       <Box sx={{ mt: 2, mb: 2 }}>
-        <Typography gutterBottom>
-          实验持续时间：{globalConfig.duration === -1 ? '无限' : `${globalConfig.duration} 秒`}
-        </Typography>
+        <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems: 'center' }}>
+          <Typography gutterBottom
+            sx={{ flex: 2 }}>
+            实验时间：{globalConfig.duration === -1 ? '无限' : `${globalConfig.duration} 秒`}
+          </Typography>
+          <Button
+            variant="outlined"
+            size="small"
+            onClick={() => updateGlobalConfig({ duration: -1 })}
+            sx={{  flex: 1 }}
+          >
+            无限
+          </Button>
+        </Box>
         <Slider
           value={globalConfig.duration === -1 ? 360 : globalConfig.duration}
           onChange={(_, value) => {
@@ -193,14 +260,6 @@ export function PropertiesPanel() {
             { value: 360, label: '无限' }
           ]}
         />
-        <Button
-          variant="outlined"
-          size="small"
-          onClick={() => updateGlobalConfig({ duration: -1 })}
-          sx={{ mt: 1 }}
-        >
-          设为无限时长
-        </Button>
       </Box>
 
       <FormControlLabel
@@ -258,7 +317,6 @@ export function PropertiesPanel() {
             } 
           })}
           size="small"
-          InputProps={{ inputProps: { min: 400, max: 3000 } }}
         />
         <TextField
           label="画布高度"
@@ -271,14 +329,13 @@ export function PropertiesPanel() {
             } 
           })}
           size="small"
-          InputProps={{ inputProps: { min: 300, max: 2000 } }}
         />
       </Box>
 
       <Divider sx={{ my: 2 }} />
 
       <Typography variant="subtitle1" gutterBottom>
-        新刺激方块默认属性
+        方块默认属性
       </Typography>
 
       <TextField
@@ -346,7 +403,6 @@ export function PropertiesPanel() {
               } 
             })}
             size="small"
-            InputProps={{ inputProps: { min: 50, max: 500 } }}
           />
           <TextField
             label="默认高度"
@@ -362,7 +418,6 @@ export function PropertiesPanel() {
               } 
             })}
             size="small"
-            InputProps={{ inputProps: { min: 50, max: 500 } }}
           />
         </Box>
       </Box>

@@ -71,7 +71,7 @@ export function useStimulation() {
       
       for (const id in items) {
         const item = items[id];
-        if (item.frequency > 0) {
+        if (item.type === 'stimulus' && item.frequency && item.frequency > 0) {
           // 初始化该刺激项的状态追踪器
           if (!stateTrackersRef.current[id]) {
             stateTrackersRef.current[id] = {
@@ -88,7 +88,7 @@ export function useStimulation() {
           let isVisible: boolean;
           let brightness: number;
 
-          if (globalConfig.waveformType === 'sine') {
+          if (item.type === 'stimulus' && globalConfig.waveformType === 'sine') {
             // 正弦波模式：使用连续的亮度变化
             const period = 1000 / item.frequency; // 完整周期（毫秒）
             const phase = (elapsedTime % period) / period; // 0-1 之间的相位
@@ -151,7 +151,7 @@ export function useStimulation() {
         const newActualFrequencies: Record<string, number> = {};
         for (const id in items) {
           const item = items[id];
-          if (item.frequency > 0 && stateTrackersRef.current[id]) {
+          if (item.type === 'stimulus' && item.frequency && item.frequency > 0 && stateTrackersRef.current[id]) {
             // 使用直接测量的平均频率，如果没有则回退到理论计算
             if (stateTrackersRef.current[id].avgFreq > 0) {
               newActualFrequencies[id] = stateTrackersRef.current[id].avgFreq;

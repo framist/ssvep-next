@@ -23,7 +23,7 @@ function App() {
     if (sharedProject) {
       // 加载共享项目数据
       loadProject(sharedProject.items, sharedProject.globalConfig);
-      
+
       // 清理 URL 参数
       const url = new URL(window.location.href);
       url.searchParams.delete('data');
@@ -41,15 +41,21 @@ function App() {
 
     if (over && over.id === 'canvas') {
       // 从工具箱拖拽新项目到画布
-      if (active.id === 'new-stimulus-box') {
+      if (active.id === 'new-stimulus-box' || active.id === 'new-text-box' || active.id === 'new-iframe-box') {
         const canvasElement = document.getElementById('canvas');
         const canvasRect = canvasElement?.getBoundingClientRect();
-        const toolboxElement = document.querySelector('[data-testid="toolbox-draggable"]');
         
+        // 根据拖拽的控件类型选择相应的元素
+        let dataTestId = 'toolbox-draggable';
+        if (active.id === 'new-text-box') dataTestId = 'toolbox-draggable-text';
+        if (active.id === 'new-iframe-box') dataTestId = 'toolbox-draggable-iframe';
+        
+        const toolboxElement = document.querySelector(`[data-testid="${dataTestId}"]`);
+
         if (canvasRect && toolboxElement && event.delta) {
           // 获取工具箱元素的位置
           const toolboxRect = toolboxElement.getBoundingClientRect();
-          
+
           const finalX = toolboxRect.left - canvasRect.left;
           const finalY = toolboxRect.top - canvasRect.top;
 
@@ -66,41 +72,70 @@ function App() {
             x = snapToGrid(x, globalConfig.gridSize);
             y = snapToGrid(y, globalConfig.gridSize);
           }
-          
-          addItem(
-            { 
-              text: globalConfig.defaultStimulus.text,
-              frequency: globalConfig.defaultStimulus.frequency,
-              size: globalConfig.defaultStimulus.size,
-              color: globalConfig.defaultStimulus.color,
-              position: { x: 0, y: 0 } // 临时位置，会被覆盖
-            }, 
-            { x, y }
-          );
+
+          // 根据控件类型创建不同的项目
+          if (active.id === 'new-stimulus-box') {
+            addItem(
+              {
+                type: 'stimulus',
+                text: globalConfig.defaultStimulus.text,
+                frequency: globalConfig.defaultStimulus.frequency,
+                size: globalConfig.defaultStimulus.size,
+                color: globalConfig.defaultStimulus.color,
+                position: { x: 0, y: 0 } // 临时位置，会被覆盖
+              },
+              { x, y }
+            );
+          } else if (active.id === 'new-text-box') {
+            addItem(
+              {
+                type: 'text',
+                text: '文本',
+                size: { width: 200, height: 100 },
+                color: 'rgba(255, 255, 255, 0.8)',
+                position: { x: 0, y: 0 }, // 临时位置，会被覆盖
+                fontSize: 16,
+                fontWeight: 'normal'
+              },
+              { x, y }
+            );
+          } else if (active.id === 'new-iframe-box') {
+            addItem(
+              {
+                type: 'iframe',
+                text: 'iframe',
+                size: { width: 400, height: 300 },
+                color: '#ffffff',
+                position: { x: 0, y: 0 }, // 临时位置，会被覆盖
+                url: 'https://example.com'
+              },
+              { x, y }
+            );
+          }
         }
       }
     }
-    
+
     // 处理画布上现有项目的拖拽
     if (active.id !== 'new-stimulus-box' && event.delta && over?.id === 'canvas') {
       const activeId = active.id as string;
       const currentItem = useStore.getState().items[activeId];
-      
+
       if (currentItem) {
         // 考虑缩放因子调整拖拽距离
         const deltaX = event.delta.x / viewConfig.scale;
         const deltaY = event.delta.y / viewConfig.scale;
-        
+
         // 基于当前位置和拖拽偏移量计算新位置
         let newX = Math.max(0, currentItem.position.x + deltaX);
         let newY = Math.max(0, currentItem.position.y + deltaY);
-        
+
         // 应用网格吸附
         if (globalConfig.snapToGrid) {
           newX = snapToGrid(newX, globalConfig.gridSize);
           newY = snapToGrid(newY, globalConfig.gridSize);
         }
-        
+
         moveItem(activeId, { x: newX, y: newY });
       }
     }
@@ -118,10 +153,10 @@ function App() {
     <DndContext onDragEnd={handleDragEnd}>
       <Box sx={{ display: 'flex', height: '100vh', overflow: 'hidden' }}>
         {/* 左侧工具箱 */}
-        <Box 
-          sx={{ 
-            width: '240px', 
-            flexShrink: 0, 
+        <Box
+          sx={{
+            width: '240px',
+            flexShrink: 0,
             borderRight: '1px solid rgba(0, 0, 0, 0.12)',
           }}
         >
@@ -134,12 +169,12 @@ function App() {
         </Box>
 
         {/* 右侧属性面板 */}
-        <Box 
-          sx={{ 
-            width: '320px', 
-            flexShrink: 0, 
+        <Box
+          sx={{
+            width: '320px',
+            flexShrink: 0,
             borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-            overflowY: 'auto'
+
           }}
         >
           <PropertiesPanel />

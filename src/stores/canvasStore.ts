@@ -1,13 +1,21 @@
 import { create } from 'zustand';
 
+export type ItemType = 'stimulus' | 'text' | 'iframe';
+
 export interface StimulusItem {
   id: string;
+  type: ItemType;
   text: string;
-  frequency: number;
+  frequency?: number;
   position: { x: number; y: number };
   size: { width: number; height: number };
   color: string;
   isRunning?: boolean;
+  // text 控件特有属性
+  fontSize?: number;
+  fontWeight?: string;
+  // iframe 控件特有属性
+  url?: string;
 }
 
 export type WaveformType = 'square' | 'sine';
@@ -93,35 +101,67 @@ export const useStore = create<CanvasStore>((set) => ({
     },
   },
   addItem: (item: Omit<StimulusItem, 'id'>, position: { x: number; y: number }) => {
-    const id = `stimulus-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+    const id = `item-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
     set((state) => {
       const defaultProps = state.globalConfig.defaultStimulus;
-      return {
-        items: { 
-          ...state.items, 
-          [id]: { 
-            ...item, 
-            id,
-            position, // 使用传入的 position 覆盖 item 中的 position
+      const itemType = item.type || 'stimulus';
+
+      // 创建基本项目属性
+      const baseItem = {
+        ...item,
+        id,
+        position, // 使用传入的 position 覆盖 item 中的 position
+        type: itemType,
+        size: item.size || defaultProps.size,
+        color: item.color || defaultProps.color,
+      };
+
+      // 根据类型添加特定属性
+      let finalItem = { ...baseItem };
+
+      switch (itemType) {
+        case 'stimulus':
+          finalItem = {
+            ...finalItem,
             text: item.text || defaultProps.text || 'Stimulus',
             frequency: item.frequency || defaultProps.frequency,
-            size: item.size || defaultProps.size,
-            color: item.color || defaultProps.color,
-          } 
+          };
+          break;
+        case 'text':
+          finalItem = {
+            ...finalItem,
+            text: item.text || 'Text',
+            fontSize: item.fontSize || 16,
+            fontWeight: item.fontWeight || 'normal',
+          };
+          break;
+        case 'iframe':
+          finalItem = {
+            ...finalItem,
+            text: item.text || 'iframe',
+            url: item.url || 'https://example.com',
+          };
+          break;
+      }
+
+      return {
+        items: {
+          ...state.items,
+          [id]: finalItem
         },
       };
     });
   },
   updateItem: (id, updates) => set((state) => ({
-    items: { 
-      ...state.items, 
-      [id]: { ...state.items[id], ...updates } 
+    items: {
+      ...state.items,
+      [id]: { ...state.items[id], ...updates }
     },
   })),
   moveItem: (id, position) => set((state) => ({
-    items: { 
-      ...state.items, 
-      [id]: { ...state.items[id], position } 
+    items: {
+      ...state.items,
+      [id]: { ...state.items[id], position }
     },
   })),
   removeItem: (id) => set((state) => {

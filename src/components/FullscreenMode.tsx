@@ -151,7 +151,7 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
           <Typography variant="body2">
             刺激方块数量：{Object.keys(items).length}
           </Typography>
-          {Object.entries(stats.actualFrequencies).map(([id, freq]) => (
+          {Object.entries(stats.actualFrequencies).filter(([id]) => items[id]?.type === 'stimulus').map(([id, freq]) => (
             <Typography key={id} variant="body2">
               {items[id]?.text || id}：{items[id]?.frequency} Hz ({freq.toFixed(2)} Hz)
             </Typography>
