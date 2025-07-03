@@ -65,6 +65,8 @@ export function PropertiesPanel() {
       height: '100vh',
       overflowX: 'hidden',
       overflowY: 'scroll',
+                  width: '320px',
+            flexShrink: 0,
     }}>
       <Typography variant="h6" gutterBottom>
         {t('properties.title')}

@@ -168,15 +168,7 @@ function App() {
         </Box>
 
         {/* 左侧工具箱 */}
-        <Box
-          sx={{
-            width: '240px',
-            flexShrink: 0,
-            borderRight: '1px solid rgba(0, 0, 0, 0.12)',
-          }}
-        >
-          <Toolbox />
-        </Box>
+        <Toolbox />
 
         {/* 中间画布 */}
         <Box sx={{ flexGrow: 1, overflow: 'auto', position: 'relative' }}>
@@ -184,15 +176,7 @@ function App() {
         </Box>
 
         {/* 右侧属性面板 */}
-        <Box
-          sx={{
-            width: '320px',
-            flexShrink: 0,
-            borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-          }}
-        >
-          <PropertiesPanel />
-        </Box>
+        <PropertiesPanel />
       </Box>
     </DndContext>
   );

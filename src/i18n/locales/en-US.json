@@ -25,11 +25,11 @@
       "export": "Export Project",
       "import": "Import Project",
       "examples": "Example Projects",
-    "importAriaLabel": "Import project file"
+      "importAriaLabel": "Import project file"
     },
     "examples": {
       "basic": "Basic Example",
-      "keyboard": "Keyboard Example", 
+      "keyboard": "Keyboard Example",
       "gamepad": "Gamepad Example",
       "speller": "Speller Example"
     },

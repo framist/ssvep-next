@@ -279,10 +279,13 @@ export function Toolbox() {
   return (
     <>
       <Box sx={{
-        borderRight: '1px solid #ccc', 
+        borderRight: '1px solid #ccc',
         p: 2,
+        height: '100vh',
         overflowX: 'hidden',
         overflowY: 'scroll',
+        width: '250px',
+        flexShrink: 0,
       }}>
         <Typography variant="h6" gutterBottom>
           {t('toolbox.title')}
