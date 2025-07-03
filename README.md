@@ -1,14 +1,13 @@
 [![GitHub License](https://img.shields.io/github/license/framist/ssvep-next)](https://github.com/framist/ssvep-next/blob/main/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/framist/ssvep-next?style=social)](https://github.com/framist/ssvep-next/stargazers)
 
-**SSVEP Visualization Web Fast Implementation** i18n support, drag-and-drop interface, and real-time stimulation rendering.
+**SSVEP Visualization Web Fast Implementation** - i18n support, drag-and-drop interface, and real-time stimulation rendering.
 
-**SSVEP Next: SSVEP 可视化 Web 快速实现** —— i18n 支持、拖拽界面和实时刺激渲染。
-
-# SSVEP-Next
-
+**SSVEP 可视化 Web 快速实现** —— i18n 支持、拖拽界面和实时刺激渲染。
 
 [Demo | 在线使用](https://framist.github.io/ssvep-next/ssvep-next/)
+
+# SSVEP Next
 
 SSVEP-Next is a single-page application (SPA) built using React, TypeScript, and Vite. It offers an intuitive and efficient graphical interface for designing and executing visual stimuli in steady-state visual evoked potential (SSVEP) experiments. Users can effortlessly create and manage SSVEP stimulation interfaces on the canvas through drag-and-drop operations and property configuration. This project draws inspiration from [quick-ssvep](https://github.com/OmidS/quickssvep) and aims to combine its core scientific capabilities with modern web development paradigms, delivering a more powerful and flexible experimental design tool.
 
@@ -140,13 +139,6 @@ npm run preview
 3. 更新类型定义
 4. 添加必要的测试
 
-### 自定义配置
-
-- 修改 `vite.config.ts` 调整构建配置
-- 编辑 `tsconfig.json` 调整 TypeScript 配置
-- 在 `eslint.config.js` 中配置代码规范
-
-
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request！
@@ -157,4 +149,4 @@ npm run preview
 
 ---
 
-*AI 赋能开发，参见 [prompt.md](prompt.md)*
+*AI 赋能，参见 [prompt.md](prompt.md)*

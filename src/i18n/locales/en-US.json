@@ -29,6 +29,8 @@
     },
     "examples": {
       "basic": "Basic Example",
+      "keyboard": "Keyboard Example", 
+      "gamepad": "Gamepad Example",
       "speller": "Speller Example"
     },
     "version": "Version {{version}}"

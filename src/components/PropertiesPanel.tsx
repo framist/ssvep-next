@@ -1,8 +1,8 @@
-import { 
-  Box, 
-  Typography, 
-  TextField, 
-  Slider, 
+import {
+  Box,
+  Typography,
+  TextField,
+  Slider,
   Button,
   Divider,
   FormControlLabel,
@@ -21,13 +21,13 @@ const DURATION_STEP_MS = 60;
 
 export function PropertiesPanel() {
   const { t } = useTranslation();
-  const { 
-    items, 
-    selectedItemId, 
-    updateItem, 
-    removeItem, 
-    globalConfig, 
-    updateGlobalConfig 
+  const {
+    items,
+    selectedItemId,
+    updateItem,
+    removeItem,
+    globalConfig,
+    updateGlobalConfig
   } = useStore();
 
   const selectedItem = selectedItemId ? items[selectedItemId] : null;
@@ -59,9 +59,9 @@ export function PropertiesPanel() {
   };
 
   return (
-    <Box sx={{ 
-      borderLeft: '1px solid #ccc', 
-      p: 2, 
+    <Box sx={{
+      borderLeft: '1px solid #ccc',
+      p: 2,
       height: '100vh',
       overflowX: 'hidden',
       overflowY: 'scroll',
@@ -73,10 +73,10 @@ export function PropertiesPanel() {
       {selectedItem ? (
         <Box>
           <Typography variant="subtitle1" gutterBottom>
-            {selectedItem.type === 'stimulus' 
-              ? t('toolbox.stimulusBox') 
-              : selectedItem.type === 'text' 
-                ? t('toolbox.textBox') 
+            {selectedItem.type === 'stimulus'
+              ? t('toolbox.stimulusBox')
+              : selectedItem.type === 'text'
+                ? t('toolbox.textBox')
                 : t('toolbox.iframeBox')}
           </Typography>
 
@@ -243,7 +243,7 @@ export function PropertiesPanel() {
             variant="outlined"
             size="small"
             onClick={() => updateGlobalConfig({ duration: -1 })}
-            sx={{  flex: 1 }}
+            sx={{ flex: 1 }}
           >
             {t('properties.infinite')}
           </Button>
@@ -317,11 +317,11 @@ export function PropertiesPanel() {
           label={t('properties.width')}
           type="number"
           value={globalConfig.canvasSize.width}
-          onChange={(e) => updateGlobalConfig({ 
-            canvasSize: { 
-              ...globalConfig.canvasSize, 
-              width: Math.max(400, parseInt(e.target.value) || 1920) 
-            } 
+          onChange={(e) => updateGlobalConfig({
+            canvasSize: {
+              ...globalConfig.canvasSize,
+              width: parseInt(e.target.value)
+            }
           })}
           size="small"
         />
@@ -329,11 +329,11 @@ export function PropertiesPanel() {
           label={t('properties.height')}
           type="number"
           value={globalConfig.canvasSize.height}
-          onChange={(e) => updateGlobalConfig({ 
-            canvasSize: { 
-              ...globalConfig.canvasSize, 
-              height: Math.max(300, parseInt(e.target.value) || 1080) 
-            } 
+          onChange={(e) => updateGlobalConfig({
+            canvasSize: {
+              ...globalConfig.canvasSize,
+              height: parseInt(e.target.value)
+            }
           })}
           size="small"
         />
@@ -348,11 +348,11 @@ export function PropertiesPanel() {
       <TextField
         label={t('properties.element.text')}
         value={globalConfig.defaultStimulus.text}
-        onChange={(e) => updateGlobalConfig({ 
-          defaultStimulus: { 
-            ...globalConfig.defaultStimulus, 
-            text: e.target.value 
-          } 
+        onChange={(e) => updateGlobalConfig({
+          defaultStimulus: {
+            ...globalConfig.defaultStimulus,
+            text: e.target.value
+          }
         })}
         fullWidth
         margin="normal"
@@ -365,11 +365,11 @@ export function PropertiesPanel() {
         </Typography>
         <Slider
           value={globalConfig.defaultStimulus.frequency}
-          onChange={(_, value) => updateGlobalConfig({ 
-            defaultStimulus: { 
-              ...globalConfig.defaultStimulus, 
-              frequency: value as number 
-            } 
+          onChange={(_, value) => updateGlobalConfig({
+            defaultStimulus: {
+              ...globalConfig.defaultStimulus,
+              frequency: value as number
+            }
           })}
           min={1}
           max={60}
@@ -382,11 +382,11 @@ export function PropertiesPanel() {
         label={t('properties.foregroundColor')}
         type="color"
         value={globalConfig.defaultStimulus.color}
-        onChange={(e) => updateGlobalConfig({ 
-          defaultStimulus: { 
-            ...globalConfig.defaultStimulus, 
-            color: e.target.value 
-          } 
+        onChange={(e) => updateGlobalConfig({
+          defaultStimulus: {
+            ...globalConfig.defaultStimulus,
+            color: e.target.value
+          }
         })}
         fullWidth
         margin="normal"
@@ -400,14 +400,14 @@ export function PropertiesPanel() {
             label={t('properties.width')}
             type="number"
             value={globalConfig.defaultStimulus.size.width}
-            onChange={(e) => updateGlobalConfig({ 
-              defaultStimulus: { 
-                ...globalConfig.defaultStimulus, 
-                size: { 
-                  ...globalConfig.defaultStimulus.size, 
-                  width: Math.max(50, parseInt(e.target.value) || 120) 
-                } 
-              } 
+            onChange={(e) => updateGlobalConfig({
+              defaultStimulus: {
+                ...globalConfig.defaultStimulus,
+                size: {
+                  ...globalConfig.defaultStimulus.size,
+                  width: Math.max(50, parseInt(e.target.value) || 120)
+                }
+              }
             })}
             size="small"
           />
@@ -415,14 +415,14 @@ export function PropertiesPanel() {
             label={t('properties.height')}
             type="number"
             value={globalConfig.defaultStimulus.size.height}
-            onChange={(e) => updateGlobalConfig({ 
-              defaultStimulus: { 
-                ...globalConfig.defaultStimulus, 
-                size: { 
-                  ...globalConfig.defaultStimulus.size, 
-                  height: Math.max(50, parseInt(e.target.value) || 120) 
-                } 
-              } 
+            onChange={(e) => updateGlobalConfig({
+              defaultStimulus: {
+                ...globalConfig.defaultStimulus,
+                size: {
+                  ...globalConfig.defaultStimulus.size,
+                  height: Math.max(50, parseInt(e.target.value) || 120)
+                }
+              }
             })}
             size="small"
           />

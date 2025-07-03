@@ -29,13 +29,15 @@
     },
     "examples": {
       "basic": "基础示例",
+      "keyboard": "键盘示例",
+      "gamepad": "游戏手柄示例",
       "speller": "拼写器示例"
     },
     "version": "版本：{{version}}"
   },
   "canvas": {
     "title": "画布",
-    "dropHere": "拖拽元素到这里",
+    "dropHere": "拖拽元素从这儿到画布",
     "emptyCanvasTitle": "从左侧工具栏拖拽刺激方块到这里开始设计",
     "emptyCanvasSubtitle": "或者点击\"加载演示\"查看示例",
     "canvasHelp": "鼠标滚轮缩放画布，按住中键或 Ctrl+ 左键平移画布",

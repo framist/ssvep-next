@@ -134,22 +134,21 @@ function DraggableIframeBox() {
 
 export function Toolbox() {
   const { t } = useTranslation();
-  const { 
-    startStimulation, 
-    stopStimulation, 
-    globalConfig, 
+  const {
+    startStimulation,
+    globalConfig,
     items,
     loadProject,
     clearAll,
     addItem,
   } = useStore();
-  
+
   const [openMatrixDialog, setOpenMatrixDialog] = useState(false);
   const [rows, setRows] = useState(3);
   const [columns, setColumns] = useState(3);
   const [spacing, setSpacing] = useState(100);
-  
-  const { loadDemoProject } = useDemoSetup();
+
+  const { loadBasicDemoProject, loadKeyboardDemoProject, loadGamepadDemoProject } = useDemoSetup();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSave = () => {
@@ -216,7 +215,7 @@ export function Toolbox() {
   };
 
   const handleClearCanvas = () => {
-    if (confirm('确定要清空画布吗？所有刺激方块将被移除。')) {
+    if (confirm('Are you sure you want to empty the canvas? All stimulus squares will be removed. \n确定要清空画布吗？所有刺激方块将被移除。')) {
       clearAll();
     }
   };
@@ -234,27 +233,27 @@ export function Toolbox() {
     const defaultStimulus = globalConfig.defaultStimulus;
     const itemWidth = defaultStimulus.size.width;
     const itemHeight = defaultStimulus.size.height;
-    
+
     // 计算矩阵起始位置（居中放置）
     const totalWidth = columns * itemWidth + (columns - 1) * spacing;
     const totalHeight = rows * itemHeight + (rows - 1) * spacing;
     const startX = (globalConfig.canvasSize.width - totalWidth) / 2;
     const startY = (globalConfig.canvasSize.height - totalHeight) / 2;
-    
+
     // 创建矩阵
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < columns; c++) {
         const x = startX + c * (itemWidth + spacing);
         const y = startY + r * (itemHeight + spacing);
-        
+
         // 计算频率变化（可选：按位置变化频率）
         const baseFrequency = defaultStimulus.frequency;
         const frequency = baseFrequency + (r * columns + c) * 0.5;
-        
+
         addItem(
           {
             type: 'stimulus',
-            text: `${r+1}-${c+1}`,
+            text: `${r + 1}-${c + 1}`,
             frequency,
             size: { width: itemWidth, height: itemHeight },
             color: defaultStimulus.color,
@@ -262,10 +261,10 @@ export function Toolbox() {
           },
           { x, y }
         );
-        console.log(`Created item ${r+1}-${c+1} at position (${x}, ${y})`);
+        console.log(`Created item ${r + 1}-${c + 1} at position (${x}, ${y})`);
       }
     }
-    
+
     setOpenMatrixDialog(false);
   };
 
@@ -279,21 +278,26 @@ export function Toolbox() {
 
   return (
     <>
-      <Box sx={{ borderRight: '1px solid #ccc', p: 2 }}>
+      <Box sx={{
+        borderRight: '1px solid #ccc', 
+        p: 2,
+        overflowX: 'hidden',
+        overflowY: 'scroll',
+      }}>
         <Typography variant="h6" gutterBottom>
           {t('toolbox.title')}
         </Typography>
-        
+
         <Typography variant="body2" sx={{ mb: 1 }}>
           {t('canvas.dropHere')}:
         </Typography>
         <DraggableStimulusBox />
         <DraggableTextBox />
         <DraggableIframeBox />
-        
+
         <Box sx={{ display: 'flex', gap: 1, mb: 2 }}>
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             size="small"
             color="primary"
             onClick={handleOpenMatrixDialog}
@@ -302,8 +306,8 @@ export function Toolbox() {
             {t('toolbox.addMatrix')}
           </Button>
 
-          <Button 
-            variant="outlined" 
+          <Button
+            variant="outlined"
             size="small"
             color="error"
             onClick={handleClearCanvas}
@@ -313,9 +317,9 @@ export function Toolbox() {
           </Button>
 
         </Box>
-        
+
         <Divider sx={{ my: 2 }} />
-        
+
         <Box sx={{ mb: 2 }}>
           <Typography variant="h6" gutterBottom>
             {t('properties.simulation')}
@@ -330,7 +334,7 @@ export function Toolbox() {
           >
             {t('properties.startStop')}
           </Button>
-          <Button
+          {/* <Button
             variant="outlined"
             color="secondary"
             fullWidth
@@ -338,7 +342,7 @@ export function Toolbox() {
             disabled={!globalConfig.isRunning}
           >
             {t('properties.startStop')}
-          </Button>
+          </Button> */}
         </Box>
 
         <Divider sx={{ my: 2 }} />
@@ -347,17 +351,9 @@ export function Toolbox() {
           <Typography variant="h6" gutterBottom>
             {t('toolbox.project.title')}
           </Typography>
+
           <Button
             variant="contained"
-            size="small"
-            fullWidth
-            sx={{ mb: 1 }}
-            onClick={loadDemoProject}
-          >
-            {t('toolbox.examples.basic')}
-          </Button>
-          <Button
-            variant="outlined"
             size="small"
             fullWidth
             sx={{ mb: 1 }}
@@ -412,7 +408,42 @@ export function Toolbox() {
           aria-label={t('toolbox.project.importAriaLabel')}
         />
 
+        <Typography variant="subtitle2" sx={{ my: 1, mb: 1, color: 'text.secondary' }}>
+          {t('toolbox.project.examples')}
+        </Typography>
+        <Button
+          color="secondary"
+          variant="outlined"
+          size="small"
+          fullWidth
+          sx={{ mb: 1 }}
+          onClick={loadBasicDemoProject}
+        >
+          {t('toolbox.examples.basic')}
+        </Button>
+        <Button
+          color="secondary"
+          variant="outlined"
+          size="small"
+          fullWidth
+          sx={{ mb: 1 }}
+          onClick={loadKeyboardDemoProject}
+        >
+          {t('toolbox.examples.keyboard')}
+        </Button>
+        <Button
+          color="secondary"
+          variant="outlined"
+          size="small"
+          fullWidth
+          sx={{ mb: 2 }}
+          onClick={loadGamepadDemoProject}
+        >
+          {t('toolbox.examples.gamepad')}
+        </Button>
+
         <Divider sx={{ my: 2 }} />
+
 
         <Box sx={{ textAlign: 'center', color: '#999' }}>
           <Typography variant="caption">
@@ -425,7 +456,7 @@ export function Toolbox() {
         </Box>
 
       </Box>
-      
+
       {/* 矩阵创建对话框 */}
       <MatrixDialog
         open={openMatrixDialog}
@@ -455,16 +486,16 @@ interface MatrixDialogProps {
   setSpacing: (spacing: number) => void;
 }
 
-function MatrixDialog({ 
-  open, 
-  onClose, 
-  onConfirm, 
-  rows, 
-  setRows, 
-  columns, 
-  setColumns, 
-  spacing, 
-  setSpacing 
+function MatrixDialog({
+  open,
+  onClose,
+  onConfirm,
+  rows,
+  setRows,
+  columns,
+  setColumns,
+  spacing,
+  setSpacing
 }: MatrixDialogProps) {
   const { t } = useTranslation();
 

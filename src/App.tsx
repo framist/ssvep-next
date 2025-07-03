@@ -47,12 +47,12 @@ function App() {
       if (active.id === 'new-stimulus-box' || active.id === 'new-text-box' || active.id === 'new-iframe-box') {
         const canvasElement = document.getElementById('canvas');
         const canvasRect = canvasElement?.getBoundingClientRect();
-        
+
         // 根据拖拽的控件类型选择相应的元素
         let dataTestId = 'toolbox-draggable';
         if (active.id === 'new-text-box') dataTestId = 'toolbox-draggable-text';
         if (active.id === 'new-iframe-box') dataTestId = 'toolbox-draggable-iframe';
-        
+
         const toolboxElement = document.querySelector(`[data-testid="${dataTestId}"]`);
 
         if (canvasRect && toolboxElement && event.delta) {
@@ -189,7 +189,6 @@ function App() {
             width: '320px',
             flexShrink: 0,
             borderLeft: '1px solid rgba(0, 0, 0, 0.12)',
-
           }}
         >
           <PropertiesPanel />

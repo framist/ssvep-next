@@ -3,7 +3,7 @@ import { useStore } from '../stores/canvasStore';
 export function useDemoSetup() {
   const { loadProject } = useStore();
 
-  const loadDemoProject = () => {
+  const loadBasicDemoProject = () => {
     const demoItems = {
       'demo-1': {
         id: 'demo-1',
@@ -62,5 +62,439 @@ export function useDemoSetup() {
     loadProject(demoItems, demoConfig);
   };
 
-  return { loadDemoProject };
+  const loadKeyboardDemoProject = () => {
+    // 模拟键盘 QWERTY 布局的前两行
+    const keyboardItems = {
+      // 第一行: Q W E R T Y U I O P
+      'key-q': {
+        id: 'key-q',
+        type: 'stimulus' as const,
+        text: 'Q',
+        frequency: 8.0,
+        position: { x: 50, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-w': {
+        id: 'key-w',
+        type: 'stimulus' as const,
+        text: 'W',
+        frequency: 8.5,
+        position: { x: 120, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-e': {
+        id: 'key-e',
+        type: 'stimulus' as const,
+        text: 'E',
+        frequency: 9.0,
+        position: { x: 190, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-r': {
+        id: 'key-r',
+        type: 'stimulus' as const,
+        text: 'R',
+        frequency: 9.5,
+        position: { x: 260, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-t': {
+        id: 'key-t',
+        type: 'stimulus' as const,
+        text: 'T',
+        frequency: 10.0,
+        position: { x: 330, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-y': {
+        id: 'key-y',
+        type: 'stimulus' as const,
+        text: 'Y',
+        frequency: 10.5,
+        position: { x: 400, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-u': {
+        id: 'key-u',
+        type: 'stimulus' as const,
+        text: 'U',
+        frequency: 11.0,
+        position: { x: 470, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-i': {
+        id: 'key-i',
+        type: 'stimulus' as const,
+        text: 'I',
+        frequency: 11.5,
+        position: { x: 540, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-o': {
+        id: 'key-o',
+        type: 'stimulus' as const,
+        text: 'O',
+        frequency: 12.0,
+        position: { x: 610, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-p': {
+        id: 'key-p',
+        type: 'stimulus' as const,
+        text: 'P',
+        frequency: 12.5,
+        position: { x: 680, y: 100 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      // 第二行: A S D F G H J K L
+      'key-a': {
+        id: 'key-a',
+        type: 'stimulus' as const,
+        text: 'A',
+        frequency: 13.0,
+        position: { x: 85, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-s': {
+        id: 'key-s',
+        type: 'stimulus' as const,
+        text: 'S',
+        frequency: 13.5,
+        position: { x: 155, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-d': {
+        id: 'key-d',
+        type: 'stimulus' as const,
+        text: 'D',
+        frequency: 14.0,
+        position: { x: 225, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-f': {
+        id: 'key-f',
+        type: 'stimulus' as const,
+        text: 'F',
+        frequency: 14.5,
+        position: { x: 295, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-g': {
+        id: 'key-g',
+        type: 'stimulus' as const,
+        text: 'G',
+        frequency: 15.0,
+        position: { x: 365, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-h': {
+        id: 'key-h',
+        type: 'stimulus' as const,
+        text: 'H',
+        frequency: 15.5,
+        position: { x: 435, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-j': {
+        id: 'key-j',
+        type: 'stimulus' as const,
+        text: 'J',
+        frequency: 16.0,
+        position: { x: 505, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-k': {
+        id: 'key-k',
+        type: 'stimulus' as const,
+        text: 'K',
+        frequency: 16.5,
+        position: { x: 575, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-l': {
+        id: 'key-l',
+        type: 'stimulus' as const,
+        text: 'L',
+        frequency: 17.0,
+        position: { x: 645, y: 170 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      // 第三行: Z X C V B N M
+      'key-z': {
+        id: 'key-z',
+        type: 'stimulus' as const,
+        text: 'Z',
+        frequency: 17.5,
+        position: { x: 155, y: 240 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-x': {
+        id: 'key-x',
+        type: 'stimulus' as const,
+        text: 'X',
+        frequency: 18.0,
+        position: { x: 225, y: 240 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-c': {
+        id: 'key-c',
+        type: 'stimulus' as const,
+        text: 'C',
+        frequency: 18.5,
+        position: { x: 295, y: 240 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-v': {
+        id: 'key-v',
+        type: 'stimulus' as const,
+        text: 'V',
+        frequency: 19.0,
+        position: { x: 365, y: 240 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-b': {
+        id: 'key-b',
+        type: 'stimulus' as const,
+        text: 'B',
+        frequency: 19.5,
+        position: { x: 435, y: 240 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-n': {
+        id: 'key-n',
+        type: 'stimulus' as const,
+        text: 'N',
+        frequency: 20.0,
+        position: { x: 505, y: 240 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      'key-m': {
+        id: 'key-m',
+        type: 'stimulus' as const,
+        text: 'M',
+        frequency: 20.5,
+        position: { x: 575, y: 240 },
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+      // 空格键
+      'key-space': {
+        id: 'key-space',
+        type: 'stimulus' as const,
+        text: 'SPACE',
+        frequency: 21.0,
+        position: { x: 300, y: 310 },
+        size: { width: 180, height: 60 },
+        color: '#ffffff',
+      },
+      // 输入显示区域
+      'input-display': {
+        id: 'input-display',
+        type: 'text' as const,
+        text: 'Input will not appear here...',
+        position: { x: 50, y: 30 },
+        size: { width: 680, height: 40 },
+        color: '#cccccc',
+        fontSize: 24,
+        fontWeight: 'normal',
+      },
+    };
+
+    const keyboardConfig = {
+      duration: 120,
+      backgroundColor: '#1a1a1a',
+      isRunning: false,
+      snapToGrid: true,
+      gridSize: 20,
+      waveformType: 'square' as const,
+      canvasSize: { width: 800, height: 400 },
+      defaultStimulus: {
+        text: 'Key',
+        frequency: 10,
+        size: { width: 60, height: 60 },
+        color: '#ffffff',
+      },
+    };
+
+    loadProject(keyboardItems, keyboardConfig);
+  };
+
+  const loadGamepadDemoProject = () => {
+    const gamepadItems = {
+      // 方向键（十字键）
+      'dpad-up': {
+        id: 'dpad-up',
+        type: 'stimulus' as const,
+        text: '↑',
+        frequency: 8.0,
+        position: { x: 150, y: 100 },
+        size: { width: 80, height: 80 },
+        color: '#4caf50',
+      },
+      'dpad-down': {
+        id: 'dpad-down',
+        type: 'stimulus' as const,
+        text: '↓',
+        frequency: 9.0,
+        position: { x: 150, y: 200 },
+        size: { width: 80, height: 80 },
+        color: '#4caf50',
+      },
+      'dpad-left': {
+        id: 'dpad-left',
+        type: 'stimulus' as const,
+        text: '←',
+        frequency: 10.0,
+        position: { x: 100, y: 150 },
+        size: { width: 80, height: 80 },
+        color: '#4caf50',
+      },
+      'dpad-right': {
+        id: 'dpad-right',
+        type: 'stimulus' as const,
+        text: '→',
+        frequency: 11.0,
+        position: { x: 200, y: 150 },
+        size: { width: 80, height: 80 },
+        color: '#4caf50',
+      },
+      // 动作按钮（A, B, X, Y）
+      'btn-a': {
+        id: 'btn-a',
+        type: 'stimulus' as const,
+        text: 'A',
+        frequency: 12.0,
+        position: { x: 550, y: 200 },
+        size: { width: 80, height: 80 },
+        color: '#f44336',
+      },
+      'btn-b': {
+        id: 'btn-b',
+        type: 'stimulus' as const,
+        text: 'B',
+        frequency: 13.0,
+        position: { x: 600, y: 150 },
+        size: { width: 80, height: 80 },
+        color: '#ff9800',
+      },
+      'btn-x': {
+        id: 'btn-x',
+        type: 'stimulus' as const,
+        text: 'X',
+        frequency: 14.0,
+        position: { x: 500, y: 150 },
+        size: { width: 80, height: 80 },
+        color: '#2196f3',
+      },
+      'btn-y': {
+        id: 'btn-y',
+        type: 'stimulus' as const,
+        text: 'Y',
+        frequency: 15.0,
+        position: { x: 550, y: 100 },
+        size: { width: 80, height: 80 },
+        color: '#ffc107',
+      },
+      // 肩部按钮
+      'btn-lb': {
+        id: 'btn-lb',
+        type: 'stimulus' as const,
+        text: 'LB',
+        frequency: 16.0,
+        position: { x: 100, y: 50 },
+        size: { width: 100, height: 40 },
+        color: '#9c27b0',
+      },
+      'btn-rb': {
+        id: 'btn-rb',
+        type: 'stimulus' as const,
+        text: 'RB',
+        frequency: 17.0,
+        position: { x: 550, y: 50 },
+        size: { width: 100, height: 40 },
+        color: '#9c27b0',
+      },
+      // 特殊按钮
+      'btn-start': {
+        id: 'btn-start',
+        type: 'stimulus' as const,
+        text: 'START',
+        frequency: 18.0,
+        position: { x: 450, y: 300 },
+        size: { width: 100, height: 50 },
+        color: '#795548',
+      },
+      'btn-select': {
+        id: 'btn-select',
+        type: 'stimulus' as const,
+        text: 'SELECT',
+        frequency: 19.0,
+        position: { x: 300, y: 300 },
+        size: { width: 100, height: 50 },
+        color: '#795548',
+      },
+      // 状态显示
+      'status-display': {
+        id: 'status-display',
+        type: 'text' as const,
+        text: 'Game Controller Ready',
+        position: { x: 250, y: 20 },
+        size: { width: 300, height: 30 },
+        color: '#ffffff',
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+    };
+
+    const gamepadConfig = {
+      duration: 180,
+      backgroundColor: '#263238',
+      isRunning: false,
+      snapToGrid: true,
+      gridSize: 20,
+      waveformType: 'square' as const,
+      canvasSize: { width: 800, height: 400 },
+      defaultStimulus: {
+        text: 'Button',
+        frequency: 10,
+        size: { width: 80, height: 80 },
+        color: '#ffffff',
+      },
+    };
+
+    loadProject(gamepadItems, gamepadConfig);
+  };
+
+  return { 
+    loadBasicDemoProject, 
+    loadKeyboardDemoProject, 
+    loadGamepadDemoProject,
+    // 为了保持向后兼容，保留原有的 loadDemoProject 函数
+    loadDemoProject: loadBasicDemoProject
+  };
 }
