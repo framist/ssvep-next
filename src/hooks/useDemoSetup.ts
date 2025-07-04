@@ -51,6 +51,7 @@ export function useDemoSetup() {
       gridSize: 20,
       waveformType: 'square' as const,
       canvasSize: { width: 800, height: 600 },
+      showTimeDisplay: true,
       defaultStimulus: {
         text: 'Stimulus',
         frequency: 10,
@@ -333,6 +334,7 @@ export function useDemoSetup() {
       gridSize: 20,
       waveformType: 'square' as const,
       canvasSize: { width: 800, height: 400 },
+      showTimeDisplay: true,
       defaultStimulus: {
         text: 'Key',
         frequency: 10,
@@ -479,6 +481,7 @@ export function useDemoSetup() {
       gridSize: 20,
       waveformType: 'square' as const,
       canvasSize: { width: 800, height: 400 },
+      showTimeDisplay: true,
       defaultStimulus: {
         text: 'Button',
         frequency: 10,

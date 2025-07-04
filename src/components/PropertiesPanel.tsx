@@ -235,8 +235,21 @@ export function PropertiesPanel() {
         </Select>
       </FormControl>
 
-      <Box sx={{ mt: 2, mb: 2 }}>
-        <Box sx={{ display: 'flex', gap: 1, mb: 2, alignItems: 'center' }}>
+      <Divider sx={{ my: 2 }} />
+
+      <FormControlLabel
+        control={
+          <Switch
+            checked={globalConfig.showTimeDisplay}
+            onChange={(e) => updateGlobalConfig({ showTimeDisplay: e.target.checked })}
+          />
+        }
+        label={t('properties.showTimeDisplay')}
+        sx={{ mb: 2 }}
+      />
+
+      <Box>
+        <Box sx={{ display: 'flex', gap: 1, alignItems: 'center' }}>
           <Typography gutterBottom
             sx={{ flex: 2 }}>
             {t('properties.duration')}：{globalConfig.duration === -1 ? t('properties.infinite') : `${globalConfig.duration} ${t('properties.seconds')}`}
@@ -271,6 +284,8 @@ export function PropertiesPanel() {
         />
       </Box>
 
+      <Divider sx={{ my: 2 }} />
+
       <FormControlLabel
         control={
           <Switch
@@ -281,6 +296,7 @@ export function PropertiesPanel() {
         label={t('properties.snapToGrid')}
         sx={{ mb: 2 }}
       />
+
 
       {globalConfig.snapToGrid && (
         <Box sx={{ mb: 2 }}>
@@ -407,7 +423,7 @@ export function PropertiesPanel() {
                 ...globalConfig.defaultStimulus,
                 size: {
                   ...globalConfig.defaultStimulus.size,
-                  width: Math.max(50, parseInt(e.target.value) || 120)
+                  width: parseInt(e.target.value)
                 }
               }
             })}
@@ -422,7 +438,7 @@ export function PropertiesPanel() {
                 ...globalConfig.defaultStimulus,
                 size: {
                   ...globalConfig.defaultStimulus.size,
-                  height: Math.max(50, parseInt(e.target.value) || 120)
+                  height: parseInt(e.target.value)
                 }
               }
             })}

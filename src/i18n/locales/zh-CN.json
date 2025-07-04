@@ -25,8 +25,21 @@
       "export": "导出项目",
       "import": "导入项目",
       "examples": "示例项目",
-    "importAriaLabel": "导入项目文件"
+      "importAriaLabel": "导入项目文件"
     },
+    "editJson": "编辑项目 ✨ AI 助手",
+    "aiAssistant": "AI 助手",
+    "openaiApiKey": "OpenAI API Key",
+    "apiUrl": "API 地址",
+    "modelName": "模型名称",
+    "saveApiKey": "保存 API 设置",
+    "aiPrompt": "AI 指令",
+    "aiPromptPlaceholder": "例如：帮我创建一个 4x4 的刺激矩阵，频率从 10Hz 开始，依次递增 1Hz",
+    "aiGenerate": "AI 生成",
+    "aiGenerating": "生成中...",
+    "apply": "应用",
+    "save": "保存",
+    "jsonPlaceholder": "在此编辑项目 JSON 配置...",
     "examples": {
       "basic": "基础示例",
       "keyboard": "键盘示例",
@@ -67,6 +80,7 @@
     "seconds": "秒",
     "snapToGrid": "吸附网格",
     "gridSize": "网格大小",
+    "showTimeDisplay": "实验时间显示",
     "fullscreen": "全屏模式",
     "element": {
       "position": "位置",

@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useStore } from '../stores/canvasStore';
 import { ProjectManager } from '../utils/projectManager';
 import { useDemoSetup } from '../hooks/useDemoSetup';
+import { JsonEditorModal } from './JsonEditorModal';
 
 function DraggableStimulusBox() {
   const { t } = useTranslation();
@@ -147,6 +148,7 @@ export function Toolbox() {
   const [rows, setRows] = useState(3);
   const [columns, setColumns] = useState(3);
   const [spacing, setSpacing] = useState(100);
+  const [openJsonEditor, setOpenJsonEditor] = useState(false);
 
   const { loadBasicDemoProject, loadKeyboardDemoProject, loadGamepadDemoProject } = useDemoSetup();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -276,6 +278,14 @@ export function Toolbox() {
     startStimulation();
   };
 
+  const handleOpenJsonEditor = () => {
+    setOpenJsonEditor(true);
+  };
+
+  const handleCloseJsonEditor = () => {
+    setOpenJsonEditor(false);
+  };
+
   return (
     <>
       <Box sx={{
@@ -399,6 +409,15 @@ export function Toolbox() {
           >
             {t('toolbox.project.share')}
           </Button>
+          <Button
+            variant="outlined"
+            size="small"
+            fullWidth
+            sx={{ mt: 1 }}
+            onClick={handleOpenJsonEditor}
+          >
+            {t('toolbox.editJson')}
+          </Button>
         </Box>
 
         <Box
@@ -471,6 +490,19 @@ export function Toolbox() {
         setColumns={setColumns}
         spacing={spacing}
         setSpacing={setSpacing}
+      />
+
+      {/* JSON 编辑器对话框 */}
+      <JsonEditorModal
+        open={openJsonEditor}
+        onClose={handleCloseJsonEditor}
+      />
+      <JsonEditorModal
+        open={openJsonEditor}
+        onClose={handleCloseJsonEditor}
+        // onConfirm={handleJsonConfirm}
+        // jsonData={jsonData}
+        // setJsonData={setJsonData}
       />
     </>
   );

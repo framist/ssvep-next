@@ -27,6 +27,19 @@
       "examples": "Example Projects",
       "importAriaLabel": "Import project file"
     },
+    "editJson": "Edit Project ✨ AI",
+    "aiAssistant": "AI Assistant",
+    "openaiApiKey": "OpenAI API Key",
+    "apiUrl": "API URL",
+    "modelName": "Model Name",
+    "saveApiKey": "Save API Settings",
+    "aiPrompt": "AI Instruction",
+    "aiPromptPlaceholder": "e.g.: Help me create a 4x4 stimulus matrix, starting from 10Hz and increasing by 1Hz",
+    "aiGenerate": "AI Generate",
+    "aiGenerating": "Generating...",
+    "apply": "Apply",
+    "save": "Save",
+    "jsonPlaceholder": "Edit project JSON configuration here...",
     "examples": {
       "basic": "Basic Example",
       "keyboard": "Keyboard Example",
@@ -67,6 +80,7 @@
     "seconds": "s",
     "snapToGrid": "Snap to Grid",
     "gridSize": "Grid Size",
+    "showTimeDisplay": "Show Time Display",
     "fullscreen": "Fullscreen Mode",
     "element": {
       "position": "Position",

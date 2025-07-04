@@ -46,6 +46,7 @@ export interface GlobalConfig {
   gridSize: number; // 网格大小
   waveformType: WaveformType; // 波形类型
   canvasSize: CanvasSize; // 画布大小
+  showTimeDisplay: boolean; // 是否显示实验时间
   defaultStimulus: DefaultStimulusProperties; // 新刺激方块的默认属性
 }
 
@@ -93,6 +94,7 @@ export const useStore = create<CanvasStore>((set) => ({
     gridSize: 20, // 默认网格大小 20px
     waveformType: 'square', // 默认方波
     canvasSize: { width: 1920, height: 1080 }, // 默认画布大小
+    showTimeDisplay: true, // 默认显示实验时间
     defaultStimulus: {
       text: 'Stimulus',
       frequency: 10,

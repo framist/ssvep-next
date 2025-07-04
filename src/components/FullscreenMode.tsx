@@ -165,23 +165,25 @@ export function FullscreenMode({ onExit }: FullscreenModeProps) {
       )}
 
       {/* 时间显示 */}
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 20,
-          left: '50%',
-          transform: 'translateX(-50%)',
-          color: 'white',
-          zIndex: 10000,
-        }}
-      >
-        <Typography variant="h4">
-          {globalConfig.duration === -1
-            ? `${Math.floor(elapsedTime / 60)}:${(elapsedTime % 60).toString().padStart(2, '0')}`
-            : `${Math.max(0, globalConfig.duration - elapsedTime)}s`
-          }
-        </Typography>
-      </Box>
+      {globalConfig.showTimeDisplay && (
+        <Box
+          sx={{
+            position: 'absolute',
+            top: 20,
+            left: '50%',
+            transform: 'translateX(-50%)',
+            color: 'white',
+            zIndex: 10000,
+          }}
+        >
+          <Typography variant="h4">
+            {globalConfig.duration === -1
+              ? `${Math.floor(elapsedTime / 60)}:${(elapsedTime % 60).toString().padStart(2, '0')}`
+              : `${Math.max(0, globalConfig.duration - elapsedTime)}s`
+            }
+          </Typography>
+        </Box>
+      )}
 
       {/* 刺激方块 */}
       {Object.values(items).map((item) => {
