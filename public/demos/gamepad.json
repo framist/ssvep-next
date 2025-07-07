@@ -1,0 +1,103 @@
+{
+  "items": {
+    "item-1751870734316-seouchb": {
+      "id": "item-1751870734316-seouchb",
+      "type": "stimulus",
+      "text": "←",
+      "frequency": 10,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "color": "#ffffff",
+      "position": {
+        "x": 200,
+        "y": 450
+      }
+    },
+    "item-1751870750368-ehkq39l": {
+      "id": "item-1751870750368-ehkq39l",
+      "type": "stimulus",
+      "text": "→",
+      "frequency": 11,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "color": "#ffffff",
+      "position": {
+        "x": 700,
+        "y": 450
+      }
+    },
+    "item-1751870753700-cgndhw8": {
+      "id": "item-1751870753700-cgndhw8",
+      "type": "stimulus",
+      "text": "↑",
+      "frequency": 13,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "color": "#ffffff",
+      "position": {
+        "x": 450,
+        "y": 200
+      }
+    },
+    "item-1751870821961-d4vwofi": {
+      "id": "item-1751870821961-d4vwofi",
+      "type": "stimulus",
+      "text": "↓",
+      "frequency": 9,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "color": "#ffffff",
+      "position": {
+        "x": 450,
+        "y": 700
+      }
+    },
+    "item-1751870827709-jxfhqqo": {
+      "id": "item-1751870827709-jxfhqqo",
+      "type": "stimulus",
+      "text": "x",
+      "frequency": 8,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "color": "#ffffff",
+      "position": {
+        "x": 1300,
+        "y": 450
+      }
+    }
+  },
+  "globalConfig": {
+    "duration": -1,
+    "backgroundColor": "#000000",
+    "isRunning": false,
+    "snapToGrid": true,
+    "gridSize": 50,
+    "waveformType": "square",
+    "canvasSize": {
+      "width": 1920,
+      "height": 1080
+    },
+    "showTimeDisplay": false,
+    "defaultStimulus": {
+      "text": "Stimulus",
+      "frequency": 10,
+      "size": {
+        "width": 200,
+        "height": 200
+      },
+      "color": "#ffffff"
+    }
+  },
+  "version": "1.0.0",
+  "timestamp": 1735740000000
+}

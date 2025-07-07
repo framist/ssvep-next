@@ -23,7 +23,7 @@ import "prismjs/components/prism-json";
 import "prismjs/themes/prism.css";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../stores/canvasStore";
-import { type ProjectData } from "../utils/projectManager";
+import { ProjectManager } from "../utils/projectManager";
 
 interface JsonEditorModalProps {
   open: boolean;
@@ -134,13 +134,7 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
   // 初始化 JSON 内容
   useEffect(() => {
     if (open) {
-      const projectData: ProjectData = {
-        items,
-        globalConfig,
-        version: "1.0.1",
-        timestamp: Date.now(),
-      };
-      setJsonContent(JSON.stringify(projectData, null, 2));
+      setJsonContent(ProjectManager.formatProjectToJson(items, globalConfig));
       setError("");
     }
   }, [open, items, globalConfig]);
@@ -151,26 +145,7 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
   }, []);
 
   const validateAndParseJson = useCallback(() => {
-    try {
-      const parsed = JSON.parse(jsonContent);
-
-      // 基本结构验证
-      if (!parsed.items || typeof parsed.items !== "object") {
-        throw new Error(
-          'Invalid JSON structure: missing or invalid "items" field'
-        );
-      }
-
-      if (!parsed.globalConfig || typeof parsed.globalConfig !== "object") {
-        throw new Error(
-          'Invalid JSON structure: missing or invalid "globalConfig" field'
-        );
-      }
-
-      return parsed as ProjectData;
-    } catch (error) {
-      throw new Error(`JSON parsing error: ${(error as Error).message}`);
-    }
+    return ProjectManager.parseProjectFromJson(jsonContent);
   }, [jsonContent]);
 
   const handleApply = useCallback(() => {
@@ -247,7 +222,7 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
         const errorData = await response.json().catch(() => null);
         throw new Error(
           errorData?.error?.message ||
-            `OpenAI API error: ${response.status} ${response.statusText}`
+          `OpenAI API error: ${response.status} ${response.statusText}`
         );
       }
 
