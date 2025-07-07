@@ -23,17 +23,16 @@ SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 
 
 ## 核心功能
 
-- **可视化设计器：** 通过拖拽方式在画布上布局刺激方块、文本和iframe控件。
-- **属性配置：** 实时调整控件的频率、文本、颜色、位置和大小等属性。
-- **刺激渲染：** 精确渲染配置好的 SSVEP 刺激，支持全屏运行模式。
-- **频率测量**: 实时测量刺激的瞬时和平均频率，支持滑动窗口平滑。
-- **画布自定义**: 自由设置画布大小，适应不同屏幕和实验需求。
-- **矩阵一键生成**: 快速创建行列均匀分布的刺激矩阵。
-- **全局默认配置**: 统一设置新刺激块的初始属性，简化重复操作。
-- **多种控件支持**: 除了刺激方块外，还支持文本控件和iframe嵌入控件。
+- **Visual Designer**: Drag and drop the box, text, and iframe controls on the canvas. You can adjust properties such as frequency, text, color, position, and size of the control.
+- **Real-time SSVEP rendering**: accurately renders the configured SSVEP stimulus and supports full-screen operation mode. The instantaneous and average frequency of stimulation was measured in real time.
+- **Internationalization support**: supports switching between Chinese and English interfaces and automatically detects browser language preferences.
+- ✨**AI-assisted editing**: integrates the AI assistant and supports natural language commands to modify JSON configuration for intelligent editing.
+
+
+- **可视化设计器**：通过拖拽方式在画布上布局刺激方块、文本和 iframe 控件。可调整控件的频率、文本、颜色、位置和大小等属性。
+- **实时 SSVEP 渲染**：精确渲染配置好的 SSVEP 刺激，支持全屏运行模式。实时测量刺激的瞬时和平均频率。
 - **国际化支持**: 支持中英文界面切换，自动检测浏览器语言偏好。
-- **模块化组件：** 清晰的项目结构，便于功能扩展和维护。
-- **AI 辅助编辑**: 集成 AI 助手，支持自然语言指令修改 JSON 配置，实现智能化编辑。
+- ✨ **AI 辅助编辑**: 集成 AI 助手，支持自然语言指令修改 JSON 配置，实现智能化编辑。
 
 ## 技术栈
 
@@ -45,19 +44,19 @@ SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 
 
 ## 项目优势
 
-| 特性 | quick-ssvep | SSVEP-Next (本项目) |
-| :--- | :--- | :--- |
-| **核心范式** | 参数化配置，代码驱动 | ✅ **可视化、拖拽式设计** |
-| **技术架构** | 原生 JavaScript, HTML, CSS | ✅ **React, TypeScript, Vite** (现代 Web 架构) |
-| **刺激类型** | 仅支持方波，颜色与样式固定 | 多种波形类型支持：方波、正弦波；用户可自定义颜色与样式 |
-| **多种控件支持** | 仅支持刺激方块 | ✅ **刺激方块、文本控件、iframe嵌入控件** |
-| **状态管理** | 全局变量，DOM 查询 | ✅ **Zustand** (集中式、可预测的状态管理) |
-| **频率测量** | 直接测量瞬时/平均频率 | ✅ **继承并优化**：实现相同的直接测量法，并增加滑动窗口平滑 |
-| **帧率监控** | 启动前预估 | ✅ **实时动态监控**，运行时反馈更准确 |
-| **分享与协作**| 生成静态 URL | ✅ **继承并优化** 一键分享链接，轻松复现实验设计 |
-| **AI 辅助编辑** | 无 | ✅ **集成 AI 助手**，支持自然语言指令修改 JSON 配置 |
-| **国际化** | 无 | ✅ **i18n 支持** (中英文切换) |
-| **部署** | 手动上传文件 | ✅ **CI/CD 自动化部署** (GitHub Actions) |
+| 特性             | quick-ssvep                | SSVEP-Next (本项目)                                        |
+| :--------------- | :------------------------- | :--------------------------------------------------------- |
+| **核心范式**     | 参数化配置，代码驱动       | ✅ **可视化、拖拽式设计**                                   |
+| **技术架构**     | 原生 JavaScript, HTML, CSS | ✅ **React, TypeScript, Vite** (现代 Web 架构)              |
+| **刺激类型**     | 仅支持方波，颜色与样式固定 | 多种波形类型支持：方波、正弦波；用户可自定义颜色与样式     |
+| **多种控件支持** | 仅支持刺激方块             | ✅ **刺激方块、文本控件、iframe 嵌入控件**                  |
+| **状态管理**     | 全局变量，DOM 查询         | ✅ **Zustand** (集中式、可预测的状态管理)                   |
+| **频率测量**     | 直接测量瞬时/平均频率      | ✅ **继承并优化**：实现相同的直接测量法，并增加滑动窗口平滑 |
+| **帧率监控**     | 启动前预估                 | ✅ **实时动态监控**，运行时反馈更准确                       |
+| **分享与协作**   | 生成静态 URL               | ✅ **继承并优化** 一键分享链接，轻松复现实验设计            |
+| **AI 辅助编辑**  | 无                         | ✅ **集成 AI 助手**，支持自然语言指令修改 JSON 配置         |
+| **国际化**       | 无                         | ✅ **i18n 支持** (中英文切换)                               |
+| **部署**         | 手动上传文件               | ✅ **CI/CD 自动化部署** (GitHub Actions)                    |
 
 
 ## 项目结构
@@ -108,23 +107,7 @@ src/
 
 本项目已配置 GitHub Actions 自动部署。当代码推送到 `main` 分支时，将自动构建并部署到 GitHub Pages。
 
-**首次设置 GitHub Pages：**
-
-1. 在 GitHub 仓库中，进入 Settings > Pages
-2. 在 "Source" 部分选择 "GitHub Actions"
-3. 推送代码到 `main` 分支即可触发自动部署
-
 **访问地址：** `https://framist.github.io/ssvep-next/`
-
-### 手动部署
-
-如果需要手动部署，可以使用以下命令：
-
-```bash
-npm run deploy
-```
-
-这将构建项目并将构建产物推送到 `gh-pages` 分支。
 
 ### 本地预览
 
@@ -146,10 +129,6 @@ npm run preview
 ## 贡献
 
 欢迎提交 Issue 和 Pull Request！
-
-## 许可证
-
-本项目采用 MIT 许可证。
 
 ---
 
