@@ -96,7 +96,6 @@ const SYSTEM_PROMPT = `You are an expert assistant for designing SSVEP (Steady-S
 5.  **Return Complete JSON**: Always return the full, complete JSON configuration. Do not omit any existing fields or elements unless requested.
 6.  **Output Raw JSON Only**: Your final output must be ONLY the JSON configuration text, without any surrounding text, explanations, or markdown code blocks (like \`\`\`json\`).`;
 
-
 export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
   open,
   onClose,
@@ -108,7 +107,9 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
   const [userPrompt, setUserPrompt] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [saveApiKey, setSaveApiKey] = useState(false);
-  const [apiUrl, setApiUrl] = useState("https://api.openai.com/v1/chat/completions");
+  const [apiUrl, setApiUrl] = useState(
+    "https://api.openai.com/v1/chat/completions"
+  );
   const [modelName, setModelName] = useState("gpt-4.1");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -219,31 +220,28 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
         localStorage.removeItem("openai-model-name");
       }
 
-      const response = await fetch(
-        apiUrl,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "Accept": "application/json",
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            model: modelName,
-            messages: [
-              {
-                role: "system",
-                content: SYSTEM_PROMPT,
-              },
-              {
-                role: "user",
-                content: `Current JSON configuration:\n${jsonContent}\n\nUser request: ${userPrompt}`,
-              },
-            ],
-            temperature: 0.1,
-          }),
-        }
-      );
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: modelName,
+          messages: [
+            {
+              role: "system",
+              content: SYSTEM_PROMPT,
+            },
+            {
+              role: "user",
+              content: `Current JSON configuration:\n${jsonContent}\n\nUser request: ${userPrompt}`,
+            },
+          ],
+          temperature: 0.1,
+        }),
+      });
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => null);
@@ -288,12 +286,7 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
   }, [apiKey, userPrompt, jsonContent, saveApiKey, apiUrl, modelName]);
 
   return (
-    <Dialog
-      open={open}
-      onClose={onClose}
-      maxWidth="lg"
-      fullWidth
-    >
+    <Dialog open={open} onClose={onClose} maxWidth="lg" fullWidth>
       <DialogTitle>{t("toolbox.editJson")}</DialogTitle>
 
       <DialogContent dividers>
@@ -302,9 +295,32 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
             display: "flex",
             flexDirection: "column",
             gap: 2,
-            height: "60vh",
+            height: "80vh",
           }}
         >
+          {/* JSON 编辑器 */}
+          <Box
+            sx={{
+              flex: 1,
+              border: "1px solid #ccc",
+              borderRadius: 1,
+              overflow: "auto",
+            }}
+          >
+            <Editor
+              value={jsonContent}
+              onValueChange={handleJsonChange}
+              highlight={(code) => highlight(code, languages.json, "json")}
+              padding={16}
+              style={{
+                fontFamily: '"Fira code", "Fira Mono", monospace',
+                fontSize: 12,
+                lineHeight: 1.5,
+              }}
+              placeholder={t("toolbox.jsonPlaceholder")}
+            />
+          </Box>
+
           {/* AI 助手面板 */}
           <Accordion>
             <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -374,32 +390,6 @@ export const JsonEditorModal: React.FC<JsonEditorModalProps> = ({
               </Box>
             </AccordionDetails>
           </Accordion>
-
-
-          {/* JSON 编辑器 */}
-          <Box
-            sx={{
-              flex: 1,
-              border: "1px solid #ccc",
-              borderRadius: 1,
-              overflow: "hidden",
-            }}
-          >
-            <Editor
-              value={jsonContent}
-              onValueChange={handleJsonChange}
-              highlight={(code) => highlight(code, languages.json, "json")}
-              padding={16}
-              style={{
-                fontFamily: '"Fira code", "Fira Mono", monospace',
-                fontSize: 12,
-                lineHeight: 1.5,
-                height: "100%",
-                overflow: "auto",
-              }}
-              placeholder={t("toolbox.jsonPlaceholder")}
-            />
-          </Box>
 
           {/* 错误提示 */}
           {error && (

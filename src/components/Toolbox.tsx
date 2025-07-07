@@ -469,7 +469,7 @@ export function Toolbox() {
 
         <Box sx={{ textAlign: 'center', color: '#999' }}>
           <Typography variant="caption">
-            {t('toolbox.version', { version: import.meta.env.VITE_APP_VERSION })}
+            {t('toolbox.version', { version: process.env.APP_VERSION })}
           </Typography>
           <br />
           <Typography variant="caption">

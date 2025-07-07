@@ -66,7 +66,7 @@ export function useDemoSetup() {
   const loadKeyboardDemoProject = () => {
     // 模拟键盘 QWERTY 布局的前两行
     const keyboardItems = {
-      // 第一行: Q W E R T Y U I O P
+      // 第一行：Q W E R T Y U I O P
       'key-q': {
         id: 'key-q',
         type: 'stimulus' as const,
@@ -157,7 +157,7 @@ export function useDemoSetup() {
         size: { width: 60, height: 60 },
         color: '#ffffff',
       },
-      // 第二行: A S D F G H J K L
+      // 第二行：A S D F G H J K L
       'key-a': {
         id: 'key-a',
         type: 'stimulus' as const,
@@ -239,7 +239,7 @@ export function useDemoSetup() {
         size: { width: 60, height: 60 },
         color: '#ffffff',
       },
-      // 第三行: Z X C V B N M
+      // 第三行：Z X C V B N M
       'key-z': {
         id: 'key-z',
         type: 'stimulus' as const,
@@ -317,7 +317,7 @@ export function useDemoSetup() {
       'input-display': {
         id: 'input-display',
         type: 'text' as const,
-        text: 'Input will not appear here...',
+        text: 'Hello, SSVEP!',
         position: { x: 50, y: 30 },
         size: { width: 680, height: 40 },
         color: '#cccccc',
@@ -348,146 +348,104 @@ export function useDemoSetup() {
 
   const loadGamepadDemoProject = () => {
     const gamepadItems = {
-      // 方向键（十字键）
-      'dpad-up': {
-        id: 'dpad-up',
-        type: 'stimulus' as const,
-        text: '↑',
-        frequency: 8.0,
-        position: { x: 150, y: 100 },
-        size: { width: 80, height: 80 },
-        color: '#4caf50',
+      "item-1751870734316-seouchb": {
+        id: "item-1751870734316-seouchb",
+        type: "stimulus" as const,
+        text: "←",
+        frequency: 10,
+        size: {
+          width: 200,
+          height: 200
+        },
+        color: "#ffffff",
+        position: {
+          x: 200,
+          y: 450
+        }
       },
-      'dpad-down': {
-        id: 'dpad-down',
-        type: 'stimulus' as const,
-        text: '↓',
-        frequency: 9.0,
-        position: { x: 150, y: 200 },
-        size: { width: 80, height: 80 },
-        color: '#4caf50',
+      "item-1751870750368-ehkq39l": {
+        id: "item-1751870750368-ehkq39l",
+        type: "stimulus" as const,
+        text: "→",
+        frequency: 11,
+        size: {
+          width: 200,
+          height: 200
+        },
+        color: "#ffffff",
+        position: {
+          x: 700,
+          y: 450
+        }
       },
-      'dpad-left': {
-        id: 'dpad-left',
-        type: 'stimulus' as const,
-        text: '←',
-        frequency: 10.0,
-        position: { x: 100, y: 150 },
-        size: { width: 80, height: 80 },
-        color: '#4caf50',
+      "item-1751870753700-cgndhw8": {
+        id: "item-1751870753700-cgndhw8",
+        type: "stimulus" as const,
+        text: "↑",
+        frequency: 13,
+        size: {
+          width: 200,
+          height: 200
+        },
+        color: "#ffffff",
+        position: {
+          x: 450,
+          y: 200
+        }
       },
-      'dpad-right': {
-        id: 'dpad-right',
-        type: 'stimulus' as const,
-        text: '→',
-        frequency: 11.0,
-        position: { x: 200, y: 150 },
-        size: { width: 80, height: 80 },
-        color: '#4caf50',
+      "item-1751870821961-d4vwofi": {
+        id: "item-1751870821961-d4vwofi",
+        type: "stimulus" as const,
+        text: "↓",
+        frequency: 9,
+        size: {
+          width: 200,
+          height: 200
+        },
+        color: "#ffffff",
+        position: {
+          x: 450,
+          y: 700
+        }
       },
-      // 动作按钮（A, B, X, Y）
-      'btn-a': {
-        id: 'btn-a',
-        type: 'stimulus' as const,
-        text: 'A',
-        frequency: 12.0,
-        position: { x: 550, y: 200 },
-        size: { width: 80, height: 80 },
-        color: '#f44336',
-      },
-      'btn-b': {
-        id: 'btn-b',
-        type: 'stimulus' as const,
-        text: 'B',
-        frequency: 13.0,
-        position: { x: 600, y: 150 },
-        size: { width: 80, height: 80 },
-        color: '#ff9800',
-      },
-      'btn-x': {
-        id: 'btn-x',
-        type: 'stimulus' as const,
-        text: 'X',
-        frequency: 14.0,
-        position: { x: 500, y: 150 },
-        size: { width: 80, height: 80 },
-        color: '#2196f3',
-      },
-      'btn-y': {
-        id: 'btn-y',
-        type: 'stimulus' as const,
-        text: 'Y',
-        frequency: 15.0,
-        position: { x: 550, y: 100 },
-        size: { width: 80, height: 80 },
-        color: '#ffc107',
-      },
-      // 肩部按钮
-      'btn-lb': {
-        id: 'btn-lb',
-        type: 'stimulus' as const,
-        text: 'LB',
-        frequency: 16.0,
-        position: { x: 100, y: 50 },
-        size: { width: 100, height: 40 },
-        color: '#9c27b0',
-      },
-      'btn-rb': {
-        id: 'btn-rb',
-        type: 'stimulus' as const,
-        text: 'RB',
-        frequency: 17.0,
-        position: { x: 550, y: 50 },
-        size: { width: 100, height: 40 },
-        color: '#9c27b0',
-      },
-      // 特殊按钮
-      'btn-start': {
-        id: 'btn-start',
-        type: 'stimulus' as const,
-        text: 'START',
-        frequency: 18.0,
-        position: { x: 450, y: 300 },
-        size: { width: 100, height: 50 },
-        color: '#795548',
-      },
-      'btn-select': {
-        id: 'btn-select',
-        type: 'stimulus' as const,
-        text: 'SELECT',
-        frequency: 19.0,
-        position: { x: 300, y: 300 },
-        size: { width: 100, height: 50 },
-        color: '#795548',
-      },
-      // 状态显示
-      'status-display': {
-        id: 'status-display',
-        type: 'text' as const,
-        text: 'Game Controller Ready',
-        position: { x: 250, y: 20 },
-        size: { width: 300, height: 30 },
-        color: '#ffffff',
-        fontSize: 20,
-        fontWeight: 'bold',
-      },
+      "item-1751870827709-jxfhqqo": {
+        id: "item-1751870827709-jxfhqqo",
+        type: "stimulus" as const,
+        text: "x",
+        frequency: 8,
+        size: {
+          width: 200,
+          height: 200
+        },
+        color: "#ffffff",
+        position: {
+          x: 1300,
+          y: 450
+        }
+      }
     };
 
     const gamepadConfig = {
-      duration: 180,
-      backgroundColor: '#263238',
+      duration: -1,
+      backgroundColor: "#000000",
       isRunning: false,
       snapToGrid: true,
-      gridSize: 20,
-      waveformType: 'square' as const,
-      canvasSize: { width: 800, height: 400 },
-      showTimeDisplay: true,
-      defaultStimulus: {
-        text: 'Button',
-        frequency: 10,
-        size: { width: 80, height: 80 },
-        color: '#ffffff',
+      gridSize: 50,
+      waveformType: "square" as const,
+      canvasSize: {
+        width: 1920,
+        height: 1080
       },
+      showTimeDisplay: false,
+      defaultStimulus: {
+        text: "Stimulus",
+        frequency: 10,
+        size: {
+          width: 200,
+          height: 200
+        },
+        color: "#ffffff"
+      }
     };
 
     loadProject(gamepadItems, gamepadConfig);

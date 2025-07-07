@@ -10,7 +10,7 @@ export interface ProjectData {
 
 export class ProjectManager {
   private static readonly STORAGE_KEY = 'ssvep-project';
-  private static readonly VERSION = '1.0.1'; // 项目数据版本号
+  private static readonly VERSION = process.env.APP_VERSION || '0.0.0';
 
   static saveProject(items: Record<string, StimulusItem>, globalConfig: GlobalConfig): void {
     const projectData: ProjectData = {

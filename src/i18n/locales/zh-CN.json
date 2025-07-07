@@ -27,8 +27,8 @@
       "examples": "示例项目",
       "importAriaLabel": "导入项目文件"
     },
-    "editJson": "编辑项目 ✨ AI 助手",
-    "aiAssistant": "AI 助手",
+    "editJson": "编辑项目 & AI ✨",
+    "aiAssistant": "✨ AI 助手",
     "openaiApiKey": "OpenAI API Key",
     "apiUrl": "API 地址",
     "modelName": "模型名称",
@@ -124,6 +124,8 @@
     "fileLoadError": "文件加载失败",
     "projectSaveError": "保存项目失败",
     "shareGenError": "生成分享链接失败",
-    "noStimulusBoxes": "请先添加至少一个刺激方块"
+    "noStimulusBoxes": "请先添加至少一个刺激方块",
+    "saveFailed": "保存失败",
+    "noSavedProject": "没有已保存的项目"
   }
 }

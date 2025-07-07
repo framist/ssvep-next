@@ -27,8 +27,8 @@
       "examples": "Example Projects",
       "importAriaLabel": "Import project file"
     },
-    "editJson": "Edit Project ✨ AI",
-    "aiAssistant": "AI Assistant",
+    "editJson": "Edit Project & AI ✨",
+    "aiAssistant": "✨ AI Assistant",
     "openaiApiKey": "OpenAI API Key",
     "apiUrl": "API URL",
     "modelName": "Model Name",
@@ -124,6 +124,7 @@
     "fileLoadError": "Failed to load file",
     "projectSaveError": "Failed to save project",
     "shareGenError": "Failed to generate share link",
-    "noStimulusBoxes": "Please add at least one stimulus box first"
+    "noStimulusBoxes": "Please add at least one stimulus box first",
+    "saveFailed": "save failed"
   }
 }
