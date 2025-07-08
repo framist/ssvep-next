@@ -10,7 +10,11 @@ export function useDemoSetup() {
    */
   const loadDemo = async (demoName: string) => {
     try {
-      const response = await fetch(`/demos/${demoName}.json`);
+      // 确保路径以 / 开头，并且处理 BASE_URL 可能为 '/' 的情况
+      const baseUrl = import.meta.env.BASE_URL.endsWith("/")
+        ? import.meta.env.BASE_URL
+        : `${import.meta.env.BASE_URL}/`;
+      const response = await fetch(`${baseUrl}demos/${demoName}.json`);
       if (!response.ok) {
         throw new Error(
           `Failed to load demo: ${response.status} ${response.statusText}`
