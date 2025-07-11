@@ -29,13 +29,13 @@
     },
     "editJson": "Edit Project & AI ✨",
     "aiAssistant": "✨ AI Assistant",
-    "openaiApiKey": "OpenAI API Key",
-    "apiUrl": "API URL",
+    "openaiApiKey": "OpenAI API Key [Local browser use only]",
+    "apiUrl": "OpenAI compatible API URL",
     "modelName": "Model Name",
-    "saveApiKey": "Save API Settings",
+    "saveApiKey": "Save API Settings [Local browser storage only]",
     "aiPrompt": "AI Instruction",
     "aiPromptPlaceholder": "e.g.: Help me create a 4x4 stimulus matrix, starting from 10Hz and increasing by 1Hz",
-    "aiGenerate": "AI Generate",
+    "aiGenerate": "AI Generate ✨",
     "aiGenerating": "Generating...",
     "apply": "Apply",
     "save": "Save",
@@ -53,7 +53,7 @@
     "dropHere": "Drop elements here",
     "emptyCanvasTitle": "Drag stimulus boxes from the left toolbar here to start designing",
     "emptyCanvasSubtitle": "Or click \"Load Demo\" to see examples",
-    "canvasHelp": "Mouse wheel to zoom canvas, hold middle button or Ctrl+ left click to pan canvas",
+    "canvasHelp": "Mouse wheel to zoom canvas, hold middle button or Ctrl+ left click to pan canvas\n\nNote: \nThe performance of the stimulator (the exact frequency of stimulation) \ndepends largely on the screen refresh rate, the computer, and the web browser it is running in.",
     "zoomIn": "Zoom In",
     "zoomOut": "Zoom Out",
     "resetView": "Reset View"
@@ -110,7 +110,7 @@
     "stimulusCount": "Stimulus Count"
   },
   "language": {
-    "switch": "Switch Language",
+    "switch": "语言 | Language",
     "chinese": "中文",
     "english": "English"
   },

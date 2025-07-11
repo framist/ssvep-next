@@ -181,7 +181,11 @@ export function Canvas() {
               <Typography variant="h6" gutterBottom>
                 {t('canvas.emptyCanvasSubtitle')}
               </Typography>
-              <Typography variant="body2" mt={8}>
+              <Typography variant="body2" sx={{
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word',
+                mt: 6,
+              }}>
                 {t('canvas.canvasHelp')}
               </Typography>
             </Box>

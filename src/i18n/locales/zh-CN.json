@@ -29,13 +29,13 @@
     },
     "editJson": "编辑项目 & AI ✨",
     "aiAssistant": "✨ AI 助手",
-    "openaiApiKey": "OpenAI API Key",
-    "apiUrl": "API 地址",
+    "openaiApiKey": "OpenAI API Key [仅通过您的浏览器本地调用]",
+    "apiUrl": "OpenAI 兼容 API 地址",
     "modelName": "模型名称",
-    "saveApiKey": "保存 API 设置",
+    "saveApiKey": "保存 API 设置 [仅保存在您的浏览器本地]",
     "aiPrompt": "AI 指令",
     "aiPromptPlaceholder": "例如：帮我创建一个 4x4 的刺激矩阵，频率从 10Hz 开始，依次递增 1Hz",
-    "aiGenerate": "AI 生成",
+    "aiGenerate": "AI 生成 ✨",
     "aiGenerating": "生成中...",
     "apply": "应用",
     "save": "保存",
@@ -53,7 +53,7 @@
     "dropHere": "拖拽元素从这儿到画布",
     "emptyCanvasTitle": "从左侧工具栏拖拽刺激方块到这里开始设计",
     "emptyCanvasSubtitle": "或者点击\"加载演示\"查看示例",
-    "canvasHelp": "鼠标滚轮缩放画布，按住中键或 Ctrl+ 左键平移画布",
+    "canvasHelp": "鼠标滚轮缩放画布，按住中键或 Ctrl+ 左键平移画布\n\n注意：\n刺激器的性能（刺激的确切频率）在很大程度上取决于屏幕刷新率、电脑配置和运行它的 Web 浏览器。",
     "zoomIn": "放大",
     "zoomOut": "缩小",
     "resetView": "重置视图"
@@ -110,7 +110,7 @@
     "stimulusCount": "刺激方块数量"
   },
   "language": {
-    "switch": "切换语言",
+    "switch": "语言 | Language",
     "chinese": "中文",
     "english": "English"
   },

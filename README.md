@@ -17,9 +17,9 @@ SSVEP-Next 是一个基于 React、TypeScript 和 Vite 构建的单页面应用 
 
 
 > [!Note]
-> The performance of the stimulator (the exact frequency of stimulations) highly depends on the machine and the web browser running it. It is not intended for rigorous academic use, rather it is a fast solution to test simple SSVEP setups.
+> The performance of the stimulator (the exact frequency of stimulation) depends largely on the screen refresh rate, the computer configuration, and the web browser it is running in. It is not intended for rigorous academic use, rather it is a fast solution to test simple SSVEP setups.
 >
-> 注意：刺激器的性能（刺激的确切频率）在很大程度上取决于机器和运行它的 Web 浏览器。它不是为严格的学术用途而设计的，而是测试简单 SSVEP 设置的快速解决方案。
+> 注意：刺激器的性能（刺激的确切频率）在很大程度上取决于屏幕刷新率、电脑配置和运行它的 Web 浏览器。它不是为严格的学术用途而设计的，而是测试简单 SSVEP 设置的快速解决方案。
 
 ## 核心功能
 
@@ -132,4 +132,4 @@ npm run preview
 
 ---
 
-*AI 赋能，参见 [prompt.md](prompt.md)*
+*AI 赋能，参见 [AGENT.md](AGENT.md) 了解更多。*
