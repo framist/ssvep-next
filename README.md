@@ -130,6 +130,3 @@ npm run preview
 
 欢迎提交 Issue 和 Pull Request！
 
----
-
-*AI 赋能，参见 [AGENT.md](AGENT.md) 了解更多。*

@@ -1,0 +1,16 @@
+cff-version: 1.2.0
+title: "SSVEP-Next: Modern SSVEP Visualization Web Fast Implementation"
+message: "If you use this software, please cite it as below."
+type: software
+authors:
+  - family-names: "Hu"
+    given-names: "Xianan"
+repository-code: "https://github.com/framist/ssvep-next"
+license: "MIT"
+version: "v0.1.5"
+date-released: "2025-10-24"
+abstract: >
+  A React+TypeScript+Vite SPA for designing and running SSVEP visual stimuli with
+  drag-and-drop editor, real-time frequency measurement, i18n, AI-assisted editing,
+  and CI/CD-based online demo. Intended for rapid prototyping and teaching, not for
+  rigorous academic measurement.
