@@ -1,4 +1,4 @@
-[![GitHub License](https://img.shields.io/github/license/framist/ssvep-next)](https://github.com/framist/ssvep-next/blob/main/LICENSE)
+[Start to use Now! | 直接开始在线使用](https://framist.github.io/ssvep-next/) [![GitHub License](https://img.shields.io/github/license/framist/ssvep-next)](https://github.com/framist/ssvep-next/blob/main/LICENSE)
 [![GitHub Stars](https://img.shields.io/github/stars/framist/ssvep-next?style=social)](https://github.com/framist/ssvep-next/stargazers)
 
 **SSVEP Visualization Web Fast Implementation** - drag-and-drop interface, and real-time stimulation rendering. i18n support, AI assistance, and more.
@@ -6,8 +6,6 @@
 **SSVEP 可视化 Web 快速实现** —— 拖拽界面和实时刺激渲染。i18n 支持，AI 助手，还有更多功能。
 
 ![demo](demo.png)
-
-[Demo | 在线使用](https://framist.github.io/ssvep-next/)
 
 # SSVEP Next
 
@@ -74,6 +72,10 @@ src/
 
 ## 快速开始
 
+0. **体验 Demo**
+   
+   直接访问 [Demo](https://framist.github.io/ssvep-next/)
+
 1.  **克隆仓库：**
 
     ```bash
@@ -133,6 +135,6 @@ npm run preview
 ---
 
 ## 待完成任务清单
+- [ ] 基准测试与测量报告
 - [ ] 左右工具箱与属性面板支持拖拽调整宽度与折叠
-- [ ] 分享优化：引入 pako Gzip 压缩 URL，新增 `ShareModal` 展示复制按钮与二维码 `qrcode.react` ，同步更新分享按钮逻辑。修改现有“分享”按钮的逻辑，使其不再直接生成链接，而是打开 `ShareModal` 对话框。
-
+- [ ] 分享优化：引入 pako Gzip 压缩 URL，新增 `ShareModal` 展示复制按钮与二维码 `qrcode.react` ，同步更新分享按钮逻辑。修改现有“分享”按钮的逻辑，使其不再直接生成链接，而是打开 `ShareModal` 对话框
