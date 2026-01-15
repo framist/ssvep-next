@@ -33,8 +33,8 @@ class MeasurementMeta:
         """用于标识测量条件的简洁标签。"""
         hz = f"{int(self.refresh_hz)}Hz" if self.refresh_hz else "unknownHz"
         browser = self.browser or "unknownBrowser"
-        mode = self.mode or "windowed"
-        return f"{browser}_{hz}_{mode}"
+        # mode = self.mode or "windowed"
+        return f"{browser} {hz}"
 
 
 @dataclass

@@ -5,7 +5,7 @@
 ## 快速开始
 
 ```bash
-python -m scripts.measure scripts/data/2025-10-24_chrome_240_full_01.json scripts/data/2025-10-24_edge_60_windowed_01.json -o scripts/out/measure
+python -m scripts.measure scripts/data/*.json -o scripts/out/measure
 ```
 
 - 支持直接传入一个或多个导出的测量 JSON 文件。

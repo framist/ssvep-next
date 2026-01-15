@@ -54,7 +54,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     logging.basicConfig(
-        level=getattr(logging, str(args.log_level).upper(), logging.INFO),
+        level=getattr(logging, str(args.log_level).upper(), logging.DEBUG),
         format="%(levelname)s %(message)s",
     )
 

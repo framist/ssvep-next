@@ -1,11 +1,9 @@
 """图表生成。"""
 
-from __future__ import annotations
-
 import logging
 from collections import defaultdict
 from pathlib import Path
-from statistics import mean, pstdev
+from statistics import mean
 from typing import Dict, Iterable, List
 
 from .models import RunResult
@@ -47,48 +45,53 @@ def generate_plots(run_results: Iterable[RunResult], output_dir: Path) -> List[P
 
 
 def _draw_freq_error(results: List[RunResult], output_dir: Path, plt) -> bool:
+    """绘制配置频率 vs 绝对误差图表"""
     grouped: Dict[str, Dict[float, List[float]]] = defaultdict(lambda: defaultdict(list))
     for run in results:
         label = run.measurement.meta.label() or run.measurement.meta.source_path.stem
         for stim in run.stims:
             if stim.f_cfg is None or stim.abs_err is None:
                 continue
+
             grouped[label][float(stim.f_cfg)].append(float(stim.abs_err))
 
     if not grouped:
         LOG.info("缺少频率误差数据，未生成 freq_error.png")
         return False
 
-    fig, ax = plt.subplots(figsize=(7, 4))
+    n_plots = len(grouped)
+    fig, axes = plt.subplots(n_plots, 1, figsize=(6, 2 * n_plots), sharex=True, squeeze=False)
+    
     colors = {label: plt.cm.tab10(idx % 10) for idx, label in enumerate(grouped.keys())}
 
-    for label, freq_map in grouped.items():
+    for idx, (label, freq_map) in enumerate(grouped.items()):
+        ax = axes[idx][0]
         freqs = sorted(freq_map.keys())
         means: List[float] = []
-        stds: List[float] = []
+        
         for freq in freqs:
-            values = freq_map[freq]
-            means.append(mean(values))
-            stds.append(pstdev(values) if len(values) > 1 else 0.0)
-        ax.errorbar(
+            items = freq_map[freq]
+            means.append(mean(items))
+
+        ax.plot(
             freqs,
             means,
-            yerr=stds,
-            fmt="o-",
+            "o-",
             color=colors[label],
             label=label,
             linewidth=1.0,
             markersize=4.5,
-            capsize=3,
             alpha=0.85,
         )
+        
+        ax.axhline(0, color="#999999", linewidth=0.8, linestyle="--")
+        ax.set_ylabel("绝对误差 (Hz)")
+        ax.set_title(label, fontsize=10)
+        ax.grid(True, axis="y", linestyle=":", linewidth=0.5, alpha=0.5)
 
-    ax.axhline(0, color="#999999", linewidth=0.8, linestyle="--")
-    ax.set_xlabel("配置频率 (Hz)")
-    ax.set_ylabel("绝对误差 (Hz)")
-    ax.set_title("配置频率 vs 误差（误差棒：±1 标准差）")
-    ax.grid(True, axis="y", linestyle=":", linewidth=0.5, alpha=0.5)
-    ax.legend(fontsize=8, loc="upper left", bbox_to_anchor=(1.02, 1.0))
+    axes[-1][0].set_xlabel("配置频率 (Hz)")
+    
+    fig.suptitle("配置频率 vs 绝对误差（均值）", y=0.995)
     plt.tight_layout()
 
     output_path = output_dir / "freq_error.png"
@@ -125,6 +128,7 @@ def _configure_cjk_font(plt) -> None:
 
 
 def _draw_jitter_box(results: List[RunResult], output_dir: Path, plt) -> bool:
+    """绘制不同浏览器的抖动箱线图"""
     grouped = defaultdict(list)
     for run in results:
         browser = run.measurement.meta.browser or "unknown"
@@ -152,6 +156,7 @@ def _draw_jitter_box(results: List[RunResult], output_dir: Path, plt) -> bool:
 
 
 def _draw_frame_hist(results: List[RunResult], output_dir: Path, plt) -> bool:
+    """绘制帧间时间分布直方图"""
     all_dt: List[float] = []
     for run in results:
         all_dt.extend(run.frame_stats.dt_values)
@@ -161,7 +166,15 @@ def _draw_frame_hist(results: List[RunResult], output_dir: Path, plt) -> bool:
         return False
 
     plt.figure(figsize=(6, 4))
-    plt.hist(all_dt, bins=40, color="#4472c4", alpha=0.85)
+    n, bins, patches = plt.hist(all_dt, bins=40, color="#4472c4", alpha=0.85)
+    
+    # 在每个柱子顶部显示数值
+    for i, (count, bin_edge) in enumerate(zip(n, bins[:-1])):
+        if count > 0:  # 只显示非零的柱子
+            bin_center = bin_edge + (bins[i + 1] - bin_edge) / 2
+            plt.text(bin_center, count, str(int(count)), 
+                    ha='center', va='bottom', fontsize=7, alpha=0.8)
+    
     plt.title("帧间时间分布")
     plt.xlabel("dt (ms)")
     plt.ylabel("频数")

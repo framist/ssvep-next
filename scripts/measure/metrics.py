@@ -15,7 +15,7 @@ LOG = logging.getLogger(__name__)
 def analyze_measurement(
     measurement: MeasurementData,
     warmup_s: float = 2.0,
-    window_s: float = 1.0,
+    window_s: float = 10.0,
     epsilon: float = 0.2,
 ) -> RunResult:
     """计算单次测量的帧率与刺激指标。"""
@@ -181,6 +181,7 @@ def _windowed_jitter(
     midpoints_ms: Sequence[float],
     window_s: float,
 ) -> Optional[float]:
+    """计算给定刺激的划窗频率标准差。"""
     if not periods_ms or not midpoints_ms:
         return None
 

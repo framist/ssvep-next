@@ -70,7 +70,7 @@ def analyze_runs(
     output_dir: str,
     epsilon: float = 0.2,
     warmup_s: float = 2.0,
-    window_s: float = 1.0,
+    window_s: float = 10.0,
 ) -> Dict[str, Path]:
     """执行完整评测流程。"""
     measurement_sources = discover_measurements(inputs)
