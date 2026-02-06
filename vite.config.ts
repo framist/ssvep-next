@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 import { readFileSync } from 'fs'
 import { resolve } from 'path'
 
@@ -11,7 +12,49 @@ export default defineConfig(({ command }) => {
     define: {
       'process.env.APP_VERSION': JSON.stringify(packageJson.version),
     },
-    plugins: [react()],
+    plugins: [
+      react(),
+      VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['logo.svg'],
+        devOptions: {
+          enabled: true, // 开发模式下也能测试 PWA
+        },
+        workbox: {
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+        },
+        manifest: {
+          name: 'SSVEP Next',
+          short_name: 'SSVEP-Next',
+          description: 'SSVEP Visualization Web Fast Implementation - 拖拽界面和实时刺激渲染',
+          theme_color: '#1976d2',
+          background_color: '#ffffff',
+          display: 'standalone',
+          orientation: 'landscape',
+          icons: [
+            {
+              src: 'pwa-192x192.png',
+              sizes: '192x192',
+              type: 'image/png',
+              purpose: 'any'
+            },
+            {
+              src: 'pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'any'
+            },
+            {
+              src: 'pwa-512x512.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable'
+            }
+          ]
+        }
+      })
+    ],
     base: command === 'build' ? '/ssvep-next/' : '/',
     build: {
       outDir: 'dist',
